@@ -105,6 +105,33 @@ td.day-cell{text-align:right;font-weight:700;color:var(--navy);font-family:var(-
 .spinner{width:30px;height:30px;border:3px solid var(--line);border-top-color:var(--mint);border-radius:50%;animation:spin .7s linear infinite}
 .err-banner{background:var(--coral-pale);color:var(--coral);border-radius:var(--r-sm);padding:14px 16px;font-size:13px;font-weight:600;margin-bottom:18px;display:none}
 
+.view-tabs{display:flex;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;margin-bottom:22px;width:fit-content}
+.view-tabs button{display:flex;align-items:center;gap:7px;padding:9px 18px;border:0;background:transparent;border-radius:9px;font-size:13px;font-family:var(--font-d);font-weight:700;color:var(--ink-soft);transition:all .2s}
+.view-tabs button.active{background:var(--navy);color:#fff}
+.view-tabs button .badge{background:var(--coral);color:#fff;border-radius:99px;font-size:10.5px;padding:1px 7px;min-width:17px;text-align:center}
+.view-tabs button.active .badge{background:rgba(255,255,255,.25)}
+
+.review-row{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.review-row:last-child{border-bottom:0}
+.review-row .av{width:38px;height:38px;border-radius:50%;background:var(--navy-pale);color:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.review-row .av svg{width:17px;height:17px}
+.review-row .body{flex:1;min-width:0}
+.review-row .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:5px}
+.review-row .top b{font-family:var(--font-d);font-size:13.5px;color:var(--navy)}
+.review-row .stars{display:flex;gap:1px;color:var(--amber)}
+.review-row .stars svg{width:13px;height:13px}
+.review-row .stars svg.empty{color:var(--line)}
+.review-row .date{font-size:11px;color:var(--ink-soft)}
+.review-row p{font-size:13px;color:var(--ink);line-height:1.6;margin-bottom:8px}
+.review-row .actions{display:flex;gap:8px}
+.mini-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-size:12px;font-weight:700;font-family:var(--font-d);transition:all .2s}
+.mini-btn svg{width:12px;height:12px}
+.mini-btn.approve{color:var(--mint-dark);border-color:var(--mint)}
+.mini-btn.approve:hover{background:var(--mint-pale)}
+.mini-btn.delete{color:var(--coral)}
+.mini-btn.delete:hover{background:var(--coral-pale);border-color:var(--coral)}
+.pending-tag{font-size:10.5px;font-weight:700;color:var(--amber);background:var(--amber-pale);padding:2px 9px;border-radius:99px;font-family:var(--font-d)}
+
 @media(max-width:640px){
   .funnel-label{width:110px;font-size:11.5px}
   .dash-head{flex-direction:column;align-items:flex-start}
@@ -141,6 +168,12 @@ td.day-cell{text-align:right;font-weight:700;color:var(--navy);font-family:var(-
 
   <div class="err-banner" id="errBanner"></div>
 
+  <div class="view-tabs">
+    <button data-view="stats" class="active">📊 الإحصائيات</button>
+    <button data-view="reviews">⭐ التقييمات <span class="badge" id="pendingBadge" style="display:none">0</span></button>
+  </div>
+
+  <div id="statsView">
   <div class="range-tabs">
     <button data-range="7" class="active">7 أيام</button>
     <button data-range="14">14 يوم</button>
@@ -219,6 +252,43 @@ td.day-cell{text-align:right;font-weight:700;color:var(--navy);font-family:var(-
       </div>
     </div>
   </div>
+  </div>
+
+  <div id="reviewsView" style="display:none">
+    <div class="loading-screen" id="reviewsLoading">
+      <div class="spinner"></div>
+      <span>بيجيب التقييمات...</span>
+    </div>
+    <div id="reviewsContent" style="display:none">
+      <div class="kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:22px">
+        <div class="kpi k-conv">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17l-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z"/></svg></div>
+          <div class="val" id="r-avg">–</div>
+          <div class="lbl">متوسط التقييم</div>
+        </div>
+        <div class="kpi k-downloaded">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div class="val" id="r-published">–</div>
+          <div class="lbl">منشورة</div>
+        </div>
+        <div class="kpi k-reached">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <div class="val" id="r-pending">–</div>
+          <div class="lbl">في انتظار المراجعة</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>في انتظار المراجعة</h2></div>
+        <div id="pendingList"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h2>التقييمات المنشورة</h2></div>
+        <div id="publishedList"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -226,10 +296,10 @@ td.day-cell{text-align:right;font-weight:700;color:var(--navy);font-family:var(-
 const SUPABASE_URL = "https://nokgvbmngcgkfjlcmvmd.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_r96Xijbc6491_olkX2Gaqw_49BAVA48";
 
-/* الباسورد بيتخزّن في sessionStorage بس (مش localStorage) عشان يفضل شغال
-   طول ما التاب مفتوح ومتقفلش، بس يتمسح لما تقفل التاب أو تدوس "خروج" —
-   بكده مش محتاج تدخل الباسورد كل مرة تعمل refresh وهو لسه أمان معقول
-   لصفحة شخصية زي دي. */
+/* الباسورد بيتخزّن في localStorage عشان يفضل شغال حتى لو قفلت المتصفح
+   بالكامل وفتحته تاني — من غير ما تدخله كل مرة. بيفضل محفوظ لحد ما تدوس
+   "خروج" بنفسك. ده أمان معقول لصفحة شخصية زي دي، طالما الرابط والباسورد
+   في حد ذاتهم مش متسربين. */
 const SESSION_KEY = 'ti_dash_pw';
 
 var chart = null;
@@ -299,6 +369,8 @@ function renderChart(daily){
       interaction:{ intersect:false, mode:'index' }
     }
   });
+  /* تأمين إضافي: لو المتصفح لسه محسبش أبعاد الكارت الصح وقت الإنشاء */
+  requestAnimationFrame(function(){ if(chart) chart.resize(); });
 }
 
 function renderDailyTable(daily){
@@ -335,12 +407,16 @@ async function loadStats(password, days){
     document.getElementById('c-conv').textContent = pct(stats.unique_downloaded, stats.unique_visitors) + '%';
 
     renderFunnel(stats);
-    renderChart(daily);
-    renderDailyTable(daily);
 
     document.getElementById('updatedAt').textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG', { hour:'2-digit', minute:'2-digit' });
     document.getElementById('loadingScreen').style.display = 'none';
     document.getElementById('content').style.display = 'block';
+
+    /* لازم الكارت يبقى ظاهر (display غير none) الأول قبل ما نرسم فيه، وإلا
+       Chart.js بيحسب مساحة صفر ومايرسمش حاجة. عشان كده renderChart جاي هنا
+       بعد إظهار المحتوى مش قبله. */
+    renderChart(daily);
+    renderDailyTable(daily);
   }catch(e){
     document.getElementById('loadingScreen').style.display = 'none';
     var banner = document.getElementById('errBanner');
@@ -356,7 +432,121 @@ function showDash(password){
   document.getElementById('dash').style.display = 'block';
   var activeRange = document.querySelector('.range-tabs button.active');
   loadStats(password, parseInt(activeRange.dataset.range, 10));
+  loadReviews(password);
 }
+
+/* =====================================================================
+   إدارة التقييمات
+   ===================================================================== */
+function starsSvg(count){
+  var html = '';
+  for(var i = 1; i <= 5; i++){
+    html += '<svg viewBox="0 0 24 24" class="' + (i > count ? 'empty' : '') + '" style="fill:currentColor"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17l-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z"/></svg>';
+  }
+  return html;
+}
+
+function reviewDate(iso){
+  return new Date(iso).toLocaleDateString('ar-EG', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function escapeHtml(s){
+  return (s || '').replace(/[&<>"']/g, function(c){
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+  });
+}
+
+function reviewRowHtml(r, pending){
+  var safeName = escapeHtml(r.name || 'طالب');
+  var safeComment = r.comment ? escapeHtml(r.comment) : '';
+  return '<div class="review-row" data-id="' + r.id + '">' +
+    '<span class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></svg></span>' +
+    '<div class="body">' +
+      '<div class="top">' +
+        '<b>' + safeName + '</b>' +
+        '<span class="stars">' + starsSvg(r.rating) + '</span>' +
+        (pending ? '<span class="pending-tag">في الانتظار</span>' : '') +
+        '<span class="date">' + reviewDate(r.created_at) + '</span>' +
+      '</div>' +
+      (safeComment ? '<p>' + safeComment + '</p>' : '') +
+      '<div class="actions">' +
+        (pending ? '<button class="mini-btn approve" data-action="approve"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> نشر</button>' : '') +
+        '<button class="mini-btn delete" data-action="delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg> حذف</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+async function loadReviews(password){
+  var loading = document.getElementById('reviewsLoading');
+  var content = document.getElementById('reviewsContent');
+  try{
+    var reviews = await callRpc('admin_list_reviews', { p_password: password });
+    var pending = reviews.filter(function(r){ return !r.approved; });
+    var published = reviews.filter(function(r){ return r.approved; });
+
+    var badge = document.getElementById('pendingBadge');
+    if(pending.length){
+      badge.textContent = pending.length;
+      badge.style.display = 'inline-block';
+    }else{
+      badge.style.display = 'none';
+    }
+
+    document.getElementById('r-pending').textContent = pending.length;
+    document.getElementById('r-published').textContent = published.length;
+    document.getElementById('r-avg').textContent = published.length
+      ? (published.reduce(function(s,r){ return s + r.rating; }, 0) / published.length).toFixed(1)
+      : '–';
+
+    var pendingList = document.getElementById('pendingList');
+    pendingList.innerHTML = pending.length
+      ? pending.map(function(r){ return reviewRowHtml(r, true); }).join('')
+      : '<p class="empty-state">مفيش تقييمات محتاجة مراجعة دلوقتي 🎉</p>';
+
+    var publishedList = document.getElementById('publishedList');
+    publishedList.innerHTML = published.length
+      ? published.map(function(r){ return reviewRowHtml(r, false); }).join('')
+      : '<p class="empty-state">لسه مفيش تقييمات منشورة</p>';
+
+    loading.style.display = 'none';
+    content.style.display = 'block';
+  }catch(e){
+    loading.innerHTML = '<span>حصل خطأ في جلب التقييمات — تأكد إنك شغّلت ملف supabase-setup-reviews.sql</span>';
+  }
+}
+
+document.body.addEventListener('click', async function(e){
+  var btn = e.target.closest('.mini-btn');
+  if(!btn) return;
+  var row = btn.closest('.review-row');
+  var id = row.dataset.id;
+  var action = btn.dataset.action;
+  var password = localStorage.getItem(SESSION_KEY);
+  if(!password) return;
+
+  if(action === 'delete' && !confirm('متأكد إنك عايز تحذف التقييم ده؟')) return;
+
+  btn.disabled = true;
+  try{
+    await callRpc('admin_review_action', { p_password: password, p_id: parseInt(id, 10), p_action: action });
+    loadReviews(password);
+  }catch(e){
+    btn.disabled = false;
+    alert('حصل خطأ، جرّب تاني');
+  }
+});
+
+/* التبديل بين الإحصائيات والتقييمات */
+document.querySelectorAll('.view-tabs button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.view-tabs button').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    var view = btn.dataset.view;
+    document.getElementById('statsView').style.display = view === 'stats' ? 'block' : 'none';
+    document.getElementById('reviewsView').style.display = view === 'reviews' ? 'block' : 'none';
+  });
+});
 
 /* دخول */
 document.getElementById('pwBtn').addEventListener('click', async function(){
@@ -368,7 +558,7 @@ document.getElementById('pwBtn').addEventListener('click', async function(){
   document.getElementById('gateErr').style.display = 'none';
   try{
     await callRpc('get_site_stats', { p_password: pw });
-    try{ sessionStorage.setItem(SESSION_KEY, pw); }catch(e){}
+    try{ localStorage.setItem(SESSION_KEY, pw); }catch(e){}
     showDash(pw);
   }catch(e){
     document.getElementById('gateErr').style.display = 'block';
@@ -381,16 +571,17 @@ document.getElementById('pw').addEventListener('keydown', function(e){
 
 /* خروج */
 document.getElementById('logoutBtn').addEventListener('click', function(){
-  try{ sessionStorage.removeItem(SESSION_KEY); }catch(e){}
+  try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
   location.reload();
 });
 
 /* تحديث */
 document.getElementById('refreshBtn').addEventListener('click', function(){
-  var pw = sessionStorage.getItem(SESSION_KEY);
+  var pw = localStorage.getItem(SESSION_KEY);
   if(!pw) return;
   var activeRange = document.querySelector('.range-tabs button.active');
   loadStats(pw, parseInt(activeRange.dataset.range, 10));
+  loadReviews(pw);
 });
 
 /* تبديل المدى الزمني */
@@ -398,7 +589,7 @@ document.querySelectorAll('.range-tabs button').forEach(function(btn){
   btn.addEventListener('click', function(){
     document.querySelectorAll('.range-tabs button').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
-    var pw = sessionStorage.getItem(SESSION_KEY);
+    var pw = localStorage.getItem(SESSION_KEY);
     if(pw) loadStats(pw, parseInt(btn.dataset.range, 10));
   });
 });
@@ -406,7 +597,7 @@ document.querySelectorAll('.range-tabs button').forEach(function(btn){
 /* لو الباسورد متخزّن في الجلسة، ادخل على طول من غير ما يتطلب تاني */
 (function(){
   var saved = null;
-  try{ saved = sessionStorage.getItem(SESSION_KEY); }catch(e){}
+  try{ saved = localStorage.getItem(SESSION_KEY); }catch(e){}
   if(saved){
     showDash(saved);
   }

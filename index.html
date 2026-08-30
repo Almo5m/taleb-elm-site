@@ -193,6 +193,20 @@ section{position:relative}
 .gallery-item .cap{margin-top:14px;font-family:var(--font-d);font-weight:700;font-size:14px}
 .gallery-item .cap small{display:block;font-family:var(--font-b);font-weight:400;color:var(--ink-soft);font-size:12px;margin-top:3px}
 
+/* ===== BO AI ASSISTANT ===== */
+#bo-assistant{padding:70px 0 20px}
+.bo-card{
+  display:grid;grid-template-columns:1fr 1.15fr;gap:48px;align-items:center;padding:50px;
+  background:linear-gradient(155deg,var(--navy) 0%,#1c2a52 100%);color:#fff;border:0;
+}
+.bo-visual .phone{max-width:230px;margin:0 auto}
+.bo-text h3{font-family:var(--font-d);font-weight:800;font-size:clamp(22px,3vw,30px);margin-bottom:14px;line-height:1.5;color:#fff}
+.bo-text p{color:rgba(255,255,255,.72);font-size:15.5px;max-width:460px;margin-bottom:20px}
+.bo-points{display:flex;flex-direction:column;gap:12px}
+.bo-points li{display:flex;align-items:flex-start;gap:11px;color:rgba(255,255,255,.88);font-size:14px}
+.bo-points li svg{width:18px;height:18px;flex-shrink:0;margin-top:1px;color:var(--lavender)}
+@media (max-width:820px){.bo-card{grid-template-columns:1fr;padding:34px 24px}.bo-visual{order:-1}}
+
 /* ===== FEATURES ===== */
 #features{padding:20px 0 40px}
 .feature-big{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:50px 0}
@@ -218,6 +232,8 @@ section{position:relative}
   .feature-big .phone{order:-1}
   .feature-grid{grid-template-columns:1fr}
 }
+
+#lectures{padding:10px 0 60px}
 
 /* ===== RELIGIOUS ===== */
 #religious{padding:70px 0}
@@ -281,12 +297,32 @@ section{position:relative}
 
 /* ===== SUPPORT ===== */
 #support{padding:20px 0 80px}
-.support-card{padding:48px 44px}
-.support-top{max-width:520px}
-.support-top h3{font-family:var(--font-d);font-weight:800;font-size:clamp(21px,3vw,28px);margin-bottom:12px;color:var(--navy)}
-.support-top p{color:var(--ink-soft);font-size:14.5px}
+.support-card{
+  position:relative;overflow:hidden;padding:0;
+  background:linear-gradient(155deg,#FFF4E9 0%,#FFF9F0 45%,#FFEFEA 100%);
+  border:1px solid #FBDFC4;box-shadow:0 20px 50px -24px rgba(244,91,105,.25);
+}
+.support-glow-a,.support-glow-b{position:absolute;border-radius:50%;filter:blur(50px);z-index:0;pointer-events:none}
+.support-glow-a{width:260px;height:260px;background:var(--amber);opacity:.18;top:-90px;left:-70px}
+.support-glow-b{width:220px;height:220px;background:var(--coral);opacity:.16;bottom:-80px;right:-60px}
+.support-inner{position:relative;z-index:1;padding:52px 44px}
+.support-heart{
+  width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--coral),var(--amber));color:#fff;margin-bottom:20px;
+  box-shadow:0 12px 26px -10px rgba(244,91,105,.55);position:relative;
+}
+.support-heart svg{width:30px;height:30px}
+.support-heart::after{
+  content:'';position:absolute;inset:-8px;border-radius:26px;border:2px solid var(--coral);
+  opacity:.35;animation:supportPulse 2.4s ease-out infinite;
+}
+@keyframes supportPulse{0%{transform:scale(.9);opacity:.45}100%{transform:scale(1.35);opacity:0}}
+.support-top{max-width:560px}
+.support-top .eyebrow{background:#fff;color:var(--coral);box-shadow:0 4px 12px -6px rgba(244,91,105,.3)}
+.support-top h3{font-family:var(--font-d);font-weight:900;font-size:clamp(23px,3.2vw,30px);margin-bottom:12px;color:var(--navy)}
+.support-top p{color:var(--ink-soft);font-size:14.5px;line-height:1.8}
 .support-methods{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
-.pay-card{padding:22px 20px;display:flex;flex-direction:column;gap:10px;background:var(--paper);border-radius:16px;border:1px solid var(--line)}
+.pay-card{padding:22px 20px;display:flex;flex-direction:column;gap:10px;background:rgba(255,255,255,.75);backdrop-filter:blur(6px);border-radius:16px;border:1px solid #FBDFC4}
 .pay-card .pay-head{display:flex;align-items:center;gap:10px}
 .pay-card .ic-round{width:38px;height:38px;border-radius:11px;flex-shrink:0}
 .pay-card .ic-round svg{width:18px;height:18px}
@@ -310,9 +346,91 @@ section{position:relative}
   margin-top:24px;display:flex;align-items:center;gap:10px;
   color:var(--ink-soft);font-size:13px;flex-wrap:wrap;
 }
-.support-note svg{width:14px;height:14px;flex-shrink:0;color:var(--mint-dark)}
-.support-note a{color:var(--mint-dark);font-weight:600}
-@media (max-width:640px){.support-methods{grid-template-columns:1fr}.support-card{padding:34px 24px}}
+.support-note svg{width:14px;height:14px;flex-shrink:0;color:var(--coral)}
+.support-note a{color:var(--coral);font-weight:600}
+@media (max-width:640px){.support-methods{grid-template-columns:1fr}.support-inner{padding:36px 24px}}
+
+/* زرار عائم بيفضل ظاهر يفكّر الزوار بدعم المشروع طول ما هما بيقروا الصفحة */
+.support-fab{
+  position:fixed;bottom:22px;left:22px;z-index:500;display:flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,var(--coral),var(--amber));color:#fff;border:0;
+  padding:13px 20px 13px 16px;border-radius:999px;font-family:var(--font-d);font-weight:800;font-size:13.5px;
+  box-shadow:0 14px 30px -12px rgba(244,91,105,.55);cursor:pointer;
+  opacity:0;transform:translateY(16px) scale(.9);pointer-events:none;
+  transition:opacity .35s var(--ease),transform .35s var(--ease);
+}
+.support-fab.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.support-fab:hover{filter:brightness(1.06)}
+.support-fab svg{width:17px;height:17px;flex-shrink:0}
+@media (max-width:640px){.support-fab{bottom:16px;left:16px;padding:11px 16px 11px 13px;font-size:12.5px}}
+
+/* ===== UPDATES / CHANGELOG ===== */
+#updates{padding:90px 0 20px}
+.updates-head{max-width:560px;margin-bottom:44px}
+.updates-list{position:relative;display:flex;flex-direction:column;gap:0;max-width:760px}
+.updates-list::before{content:'';position:absolute;top:8px;bottom:8px;right:19px;width:2px;background:var(--line)}
+.update-item{position:relative;padding:0 56px 40px 0;display:flex;flex-direction:column;gap:10px}
+.update-item:last-child{padding-bottom:0}
+.update-item::before{
+  content:'';position:absolute;top:4px;right:12px;width:16px;height:16px;border-radius:50%;
+  background:var(--surface);border:3px solid var(--mint);z-index:2;
+}
+.update-item.is-latest::before{background:var(--mint);box-shadow:0 0 0 5px var(--mint-pale)}
+.update-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.update-version{font-family:var(--font-d);font-weight:800;font-size:16.5px;color:var(--navy)}
+.update-date{font-size:12.5px;color:var(--ink-soft)}
+.update-badge{
+  font-family:var(--font-d);font-weight:700;font-size:11px;color:var(--mint-dark);
+  background:var(--mint-pale);padding:3px 11px;border-radius:999px;
+}
+.update-item ul{display:flex;flex-direction:column;gap:8px}
+.update-item li{display:flex;align-items:flex-start;gap:9px;color:var(--ink-soft);font-size:14px;line-height:1.6}
+.update-item li svg{width:15px;height:15px;color:var(--mint-dark);flex-shrink:0;margin-top:3px}
+
+/* ===== REVIEWS ===== */
+#reviews{padding:20px 0 90px}
+.reviews-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:36px}
+.reviews-summary{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 22px;box-shadow:var(--shadow)}
+.reviews-summary .score{font-family:var(--font-d);font-weight:900;font-size:34px;color:var(--navy);line-height:1}
+.reviews-summary .stars{display:flex;gap:2px;color:var(--amber);margin:4px 0}
+.reviews-summary .stars svg{width:15px;height:15px}
+.reviews-summary .count{font-size:12px;color:var(--ink-soft)}
+.reviews-track{display:flex;gap:16px;overflow-x:auto;padding:4px 4px 18px;scroll-snap-type:x proximity;margin:0 -4px}
+.reviews-track::-webkit-scrollbar{height:6px}
+.reviews-track::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px}
+.review-card{
+  flex:0 0 280px;scroll-snap-align:start;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:20px 22px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;
+}
+.review-card .stars{display:flex;gap:2px;color:var(--amber)}
+.review-card .stars svg{width:14px;height:14px}
+.review-card .stars svg.empty{color:var(--line)}
+.review-card p{font-size:13.5px;color:var(--ink);line-height:1.75}
+.review-card .who{display:flex;align-items:center;gap:9px;margin-top:auto;padding-top:6px}
+.review-card .who .av{width:30px;height:30px;border-radius:50%;background:var(--navy-pale);color:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.review-card .who .av svg{width:14px;height:14px}
+.review-card .who b{font-family:var(--font-d);font-size:12.5px;color:var(--navy);display:block}
+.review-card .who small{font-size:11px;color:var(--ink-soft)}
+.reviews-empty{color:var(--ink-soft);font-size:13.5px;padding:20px 0}
+
+.review-form-card{max-width:560px;padding:32px 30px}
+.review-form-card h3{font-family:var(--font-d);font-weight:800;font-size:18px;color:var(--navy);margin-bottom:4px}
+.review-form-card > p{color:var(--ink-soft);font-size:13px;margin-bottom:20px}
+.star-picker{display:flex;gap:6px;flex-direction:row-reverse;justify-content:flex-end;width:fit-content}
+.star-picker button{background:none;border:0;padding:2px;color:var(--line);transition:transform .15s var(--ease), color .15s}
+.star-picker button svg{width:26px;height:26px}
+.star-picker button.active,.star-picker button:hover,.star-picker button:hover ~ button{color:var(--amber)}
+.review-form-row{margin-bottom:16px}
+.review-form-row label{display:block;font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:8px;font-family:var(--font-d)}
+.review-form-row input[type=text],.review-form-row textarea{
+  width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);
+  font-family:var(--font-b);font-size:13.5px;transition:border-color .2s;resize:vertical;
+}
+.review-form-row input[type=text]:focus,.review-form-row textarea:focus{outline:none;border-color:var(--mint)}
+.review-form-status{font-size:13px;margin-top:14px;display:none;padding:12px 14px;border-radius:12px}
+.review-form-status.ok{display:block;background:var(--mint-pale);color:var(--mint-dark)}
+.review-form-status.err{display:block;background:var(--coral-pale);color:var(--coral)}
+.hp-field{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;padding:0}
 
 /* ===== FINAL CTA ===== */
 #cta-final{padding:90px 0;text-align:center}
@@ -426,6 +544,11 @@ footer{padding:56px 0 26px}
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5"/><path d="M4.5 17.5V19a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5"/></symbol>
     <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4.5A2.5 2.5 0 0 0 4 10.9c.6.9 1.7 1.3 2.7 1M17 6h2.5A2.5 2.5 0 0 1 20 10.9c-.6.9-1.7 1.3-2.7 1M12 14v3.5M8.5 20.5h7l-1-3h-5l-1 3Z"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4.5v15M4.5 12h15"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.3 0-2.5-.3-3.6-.8L3 21l1.8-5.4A8.5 8.5 0 1 1 21 11.5Z"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 21a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17l-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></symbol>
   </defs>
 </svg>
 
@@ -540,6 +663,27 @@ footer{padding:56px 0 26px}
   </div>
 </section>
 
+<!-- ============ BO AI ASSISTANT ============ -->
+<section id="bo-assistant">
+  <div class="wrap">
+    <div class="bo-card card" data-reveal>
+      <div class="bo-visual" data-reveal="scale">
+        <div class="phone"><div class="screen"><img src="assets/screenshots/bo-assistant.jpg" alt="بو، المساعد الذكي" loading="lazy"></div></div>
+      </div>
+      <div class="bo-text">
+        <span class="eyebrow" style="background:var(--lavender-pale);color:var(--lavender)"><i style="background:var(--lavender)"></i>جديد كل الجدة</span>
+        <h3>بو، مساعدك الذكي جوه التطبيق</h3>
+        <p>بو مش بس بيجاوبك على أسئلتك عن التطبيق — بيدعمك وقت المذاكرة، وممكن كمان يشرحلك مفهوم أو يساعدك تحل مسألة في مادتك. تلاقيه أول ما تدخل تاب اليوم، جاهز يسمعك في أي وقت.</p>
+        <ul class="bo-points">
+          <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-chat"/></svg> يجاوبك على أي سؤال عن التطبيق ومميزاته</li>
+          <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-sparkle"/></svg> دعم نفسي وقت ضغط المذاكرة والامتحانات</li>
+          <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-book"/></svg> يشرحلك مفهوم أو يساعدك تحل مسألة في مادتك</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FEATURES ============ -->
 <section id="features">
   <div class="wrap">
@@ -563,12 +707,38 @@ footer{padding:56px 0 26px}
         <div class="pomodoro-ring"><span>25:00</span></div>
       </div>
       <div class="f-card card" data-reveal>
+        <div class="ic-round" style="background:var(--amber-pale);color:var(--amber)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-timer"/></svg></div>
+        <h4>أو عداد مفتوح بلا وقت محدد</h4>
+        <p>سيب موبايلك بعيد وذاكر من غير قطع — العداد بيفضل شغال لحد ما تدوس إنك خلصت بنفسك.</p>
+      </div>
+      <div class="f-card card" data-reveal>
         <div class="ic-round" style="background:var(--navy-pale);color:var(--navy)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-calendar"/></svg></div>
         <h4>جدول مذاكرة بالتقويم</h4>
         <p>حدد مواعيد المذاكرة والمواعيد المهمة على تقويم شهري، والتطبيق يفكرك في وقتها بالظبط.</p>
       </div>
+      <div class="f-card card" data-reveal>
+        <div class="ic-round" style="background:var(--coral-pale);color:var(--coral)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-bell"/></svg></div>
+        <h4>مهام بمواعيد وتذكير مستمر</h4>
+        <p>حدد تاريخ ووقت لأي مهمة، والتطبيق يفضل يفكّرك بيها كل شوية لحد ما تخلّصها.</p>
+      </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ============ LECTURES ============ -->
+<section id="lectures">
+  <div class="wrap">
+    <div class="feature-big">
+      <div class="phone" data-reveal="scale">
+        <div class="screen"><img src="assets/screenshots/lectures.jpg" alt="متابعة المحاضرات" loading="lazy"></div>
+      </div>
+      <div class="feature-text" data-reveal>
+        <span class="eyebrow"><i></i>ولا محاضرة تفوتك</span>
+        <h3>متابعة المحاضرات أول بأول</h3>
+        <p>كل محاضرة أونلاين أو أونساعة ليها ميعادها في التطبيق، وعلّم أي محاضرة اتفرجت عليها بضغطة واحدة. والستريك بتاعك بقى بيحسب كمان أيام مشاهدة المحاضرات، مش بس أيام المذاكرة.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -594,10 +764,6 @@ footer{padding:56px 0 26px}
         <div class="rel-row">
           <span class="ic-round" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-beads"/></svg></span>
           <div><b>سبحة إلكترونية</b><small>عداد تسبيح رقمي</small></div>
-        </div>
-        <div class="rel-row">
-          <span class="ic-round" style="background:var(--coral-pale);color:var(--coral)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-heart"/></svg></span>
-          <div><b>صدقة جارية</b><small>التطبيق نفسه صدقة — ادعِ لصاحبها</small></div>
         </div>
       </div>
     </div>
@@ -669,6 +835,18 @@ footer{padding:56px 0 26px}
   </div>
 </section>
 
+<!-- ============ UPDATES / CHANGELOG ============ -->
+<section id="updates">
+  <div class="wrap">
+    <div class="updates-head" data-reveal>
+      <span class="eyebrow"><i></i>بيتطوّر باستمرار</span>
+      <h2 class="section-title">آخر التحديثات</h2>
+      <p class="section-sub" style="margin-top:10px">بنضيف ونحسّن في طالب علم بشكل مستمر — دي آخر الإضافات.</p>
+    </div>
+    <div class="updates-list" id="updatesList" data-reveal></div>
+  </div>
+</section>
+
 <!-- ============ FOUNDER ============ -->
 <section id="founder">
   <div class="wrap founder-card card" data-reveal="scale">
@@ -678,45 +856,107 @@ footer{padding:56px 0 26px}
   </div>
 </section>
 
+<!-- ============ REVIEWS ============ -->
+<section id="reviews">
+  <div class="wrap">
+    <div class="reviews-head">
+      <div data-reveal>
+        <span class="eyebrow"><i></i>آراء الطلاب</span>
+        <h2 class="section-title">إيه رأي اللي جرّبوه</h2>
+      </div>
+      <div class="reviews-summary" id="reviewsSummary" style="display:none" data-reveal>
+        <span class="score" id="reviewsScore">–</span>
+        <div>
+          <div class="stars" id="reviewsStars"></div>
+          <span class="count" id="reviewsCount"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-track" id="reviewsTrack" data-reveal>
+      <p class="reviews-empty" id="reviewsEmpty">لسه مفيش تقييمات — كن أول واحد يشارك رأيه!</p>
+    </div>
+
+    <div class="review-form-card card" data-reveal>
+      <h3>شاركنا رأيك</h3>
+      <p>تقييمك بيظهر للطلاب التانيين بعد مراجعة بسيطة.</p>
+      <form id="reviewForm">
+        <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
+        <div class="review-form-row">
+          <label>تقييمك</label>
+          <div class="star-picker" id="starPicker">
+            <button type="button" data-star="5" aria-label="5 نجوم"><svg viewBox="0 0 24 24" class="icon" style="fill:currentColor"><use href="#i-star"/></svg></button>
+            <button type="button" data-star="4" aria-label="4 نجوم"><svg viewBox="0 0 24 24" class="icon" style="fill:currentColor"><use href="#i-star"/></svg></button>
+            <button type="button" data-star="3" aria-label="3 نجوم"><svg viewBox="0 0 24 24" class="icon" style="fill:currentColor"><use href="#i-star"/></svg></button>
+            <button type="button" data-star="2" aria-label="نجمتين"><svg viewBox="0 0 24 24" class="icon" style="fill:currentColor"><use href="#i-star"/></svg></button>
+            <button type="button" data-star="1" aria-label="نجمة واحدة"><svg viewBox="0 0 24 24" class="icon" style="fill:currentColor"><use href="#i-star"/></svg></button>
+          </div>
+        </div>
+        <div class="review-form-row">
+          <label for="reviewName">اسمك</label>
+          <input type="text" id="reviewName" maxlength="60" placeholder="اسمك اللي هيظهر مع التقييم" required>
+        </div>
+        <div class="review-form-row">
+          <label for="reviewComment">تعليقك (اختياري)</label>
+          <textarea id="reviewComment" maxlength="500" rows="3" placeholder="إيه اللي عجبك أو ممكن نحسّنه؟"></textarea>
+        </div>
+        <button type="submit" class="btn btn-mint" id="reviewSubmitBtn" style="width:100%;justify-content:center"><span id="reviewSubmitText">إرسال التقييم</span></button>
+        <div class="review-form-status" id="reviewStatus"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
 <!-- ============ SUPPORT ============ -->
 <section id="support">
   <div class="wrap">
     <div class="support-card card" data-reveal>
-      <div class="support-top">
-        <span class="eyebrow"><i></i>ساعدنا نكمل الطريق</span>
-        <h3>ادعم نشر طالب علم على Google Play</h3>
-        <p>نشر التطبيق على المتجر له رسوم اشتراك ومصاريف تطوير مستمرة. أي مبلغ بسيط بيقرّبنا خطوة، وبعد ما تدعم كلّمني على واتساب وأنا هبعتلك تأكيد ومتابعة.</p>
-      </div>
+      <div class="support-glow-a"></div>
+      <div class="support-glow-b"></div>
+      <div class="support-inner">
+        <div class="support-top">
+          <span class="support-heart"><svg viewBox="0 0 24 24" class="icon" style="fill:currentColor"><path d="M12 21s-7.5-4.6-10.2-9.3C.2 8.9 1.4 5.4 4.6 4.3c2-.7 4 0 5.4 1.7C11.4 4.3 13.4 3.6 15.4 4.3c3.2 1.1 4.4 4.6 2.8 7.4C15.5 16.4 12 21 12 21Z"/></svg></span>
+          <span class="eyebrow"><i></i>ساعدنا نكمل الطريق</span>
+          <h3>ادعم نشر طالب علم على Google Play</h3>
+          <p>نشر التطبيق على المتجر له رسوم اشتراك ومصاريف تطوير مستمرة. أي مبلغ بسيط بيقرّبنا خطوة، وبعد ما تدعم كلّمني على واتساب وأنا هبعتلك تأكيد ومتابعة.</p>
+        </div>
 
-      <div class="support-methods">
-        <div class="pay-card">
-          <div class="pay-head">
-            <span class="ic-round" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-wallet"/></svg></span>
-            <div><b>فودافون كاش</b><br><small>تحويل مباشر على الرقم</small></div>
+        <div class="support-methods">
+          <div class="pay-card">
+            <div class="pay-head">
+              <span class="ic-round" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-wallet"/></svg></span>
+              <div><b>فودافون كاش</b><br><small>تحويل مباشر على الرقم</small></div>
+            </div>
+            <div class="pay-number">
+              <span dir="ltr">01065631855</span>
+              <button class="copy-btn" data-copy="01065631855" type="button">
+                <svg viewBox="0 0 24 24" class="icon"><use href="#i-copy"/></svg> نسخ
+              </button>
+            </div>
           </div>
-          <div class="pay-number">
-            <span dir="ltr">01065631855</span>
-            <button class="copy-btn" data-copy="01065631855" type="button">
-              <svg viewBox="0 0 24 24" class="icon"><use href="#i-copy"/></svg> نسخ
-            </button>
+          <div class="pay-card">
+            <div class="pay-head">
+              <span class="ic-round" style="background:var(--teal-pale);color:var(--teal)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-whats"/></svg></span>
+              <div><b>تواصل شخصي</b><br><small>لتأكيد الدعم أو أي استفسار</small></div>
+            </div>
+            <a href="https://wa.me/201550036259" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" style="justify-content:center">تواصل على واتساب</a>
           </div>
         </div>
-        <div class="pay-card">
-          <div class="pay-head">
-            <span class="ic-round" style="background:var(--teal-pale);color:var(--teal)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-whats"/></svg></span>
-            <div><b>تواصل شخصي</b><br><small>لتأكيد الدعم أو أي استفسار</small></div>
-          </div>
-          <a href="https://wa.me/201550036259" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" style="justify-content:center">تواصل على واتساب</a>
-        </div>
-      </div>
 
-      <p class="support-note">
-        <svg viewBox="0 0 24 24" class="icon"><use href="#i-bolt"/></svg>
-        لسه مفيش InstaPay متاح حاليًا — <a href="https://wa.me/201550036259" target="_blank" rel="noopener">كلمني على واتساب</a> لو محتاج وسيلة تانية.
-      </p>
+        <p class="support-note">
+          <svg viewBox="0 0 24 24" class="icon"><use href="#i-bolt"/></svg>
+          لسه مفيش InstaPay متاح حاليًا — <a href="https://wa.me/201550036259" target="_blank" rel="noopener">كلمني على واتساب</a> لو محتاج وسيلة تانية.
+        </p>
+      </div>
     </div>
   </div>
 </section>
+
+<button class="support-fab" id="supportFab" type="button" aria-label="ادعم المشروع">
+  <svg viewBox="0 0 24 24" class="icon" style="fill:currentColor"><path d="M12 21s-7.5-4.6-10.2-9.3C.2 8.9 1.4 5.4 4.6 4.3c2-.7 4 0 5.4 1.7C11.4 4.3 13.4 3.6 15.4 4.3c3.2 1.1 4.4 4.6 2.8 7.4C15.5 16.4 12 21 12 21Z"/></svg>
+  ادعم المشروع
+</button>
+
 
 <!-- ============ FINAL CTA ============ -->
 <section id="cta-final">
@@ -834,7 +1074,7 @@ footer{padding:56px 0 26px}
    حط لينك تحميل ملف الـ APK هنا (من GitHub Releases مثلًا) — مكان واحد بس
    وكل زراير التحميل في الموقع (فوق، النص، وقسم الـ CTA) هتستخدمه تلقائي.
    ===================================================================== */
-const APK_URL = "https://github.com/moaz2009amen-stack/taleb-elm-site/releases/download/v1.0/taleb-elm-v1.0.0.apk";
+const APK_URL = "https://github.com/moaz2009amen-stack/taleb-elm-site/releases/download/v2.0/taleb-elm-v2.0.0.apk";
 const WA_CHANNEL_URL = "https://whatsapp.com/channel/0029VbDeexfIyPtIvmXFRG2r";
 
 /* =====================================================================
@@ -890,8 +1130,205 @@ var Analytics = (function(){
   return { track: track };
 })();
 
+/* =====================================================================
+   قائمة آخر التحديثات — عدّل هنا مع كل نسخة جديدة، بالأحدث فوق.
+   ===================================================================== */
+const APP_UPDATES = [
+  {
+    version: "الإصدار 2.0",
+    date: "سبتمبر 2026",
+    latest: true,
+    items: [
+      "تصميم جديد بالكامل — ألوان وأزرار وقوائم كل شاشة اتظبطت لتجربة أوضح وأهدأ للعين",
+      "بو، مساعدك الذكي الجديد — يجاوبك على أسئلتك عن التطبيق، يدعمك وقت المذاكرة، وممكن يشرحلك مفهوم أو يساعدك تحل مسألة",
+      "منتدى أقوى — بحث أسرع، تثبيت المواضيع المهمة فوق، وإمكانية ترفق صورة في سؤالك أو ردك",
+      "رتّب ملفاتك زي ما يريحك — اسحب وأفلت لإعادة ترتيب ملفات كل مادة، مع تأكيد قبل أي حذف",
+      "متابعة المحاضرات — علّم أي محاضرة اتفرجت عليها، والستريك بقى بيحسب كمان أيام مشاهدة المحاضرات",
+      "تقنية مذاكرة جديدة: العداد المفتوح — لطالب حابب يسيب الموبايل بعيد ويذاكر من غير قطع",
+      "مهام بمواعيد وتذكير مستمر لحد الإنجاز، ولو حددت مهمة \"تمت\" غلط قدامك 3 ثواني تتراجع فيها",
+      "لوحة تصنيف جديدة — تبويب \"الأكثر مذاكرة\" يوريك مين فعلاً بيذاكر أكتر ساعات",
+      "بو بيفتكر كلامك — محادثاتك معاه بتتسجل عشان ترجعلها وقت ما تحب"
+    ]
+  },
+  {
+    version: "الإصدار 1.0",
+    date: "أغسطس 2026",
+    latest: false,
+    items: [
+      "أول نسخة تجريبية من التطبيق متاحة للتحميل",
+      "جدول مذاكرة يومي وتتبع إنجاز المهام",
+      "مواد الكيمياء والفيزياء والأحياء والعربي والإنجليزي، وموادّ تانية حسب شعبتك",
+      "منتدى لطلاب صفك وشعبتك بالظبط",
+      "إنجازات ولوحة ترتيب لتحفيزك على الاستمرار"
+    ]
+  }
+];
+
+function renderUpdates(){
+  var list = document.getElementById('updatesList');
+  if(!list) return;
+  list.innerHTML = APP_UPDATES.map(function(u){
+    return '<div class="update-item' + (u.latest ? ' is-latest' : '') + '">' +
+      '<div class="update-top">' +
+        '<span class="update-version">' + u.version + '</span>' +
+        (u.latest ? '<span class="update-badge">الأحدث</span>' : '') +
+        '<span class="update-date">' + u.date + '</span>' +
+      '</div>' +
+      '<ul>' + u.items.map(function(t){
+        return '<li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg>' + t + '</li>';
+      }).join('') + '</ul>' +
+    '</div>';
+  }).join('');
+}
+
+/* =====================================================================
+   نظام التقييمات — عرض التقييمات المنشورة + استقبال تقييم جديد.
+   ===================================================================== */
+var Reviews = (function(){
+  var configured = SUPABASE_URL.indexOf('ضع_') !== 0 && SUPABASE_ANON_KEY.indexOf('ضع_') !== 0;
+  var selectedStars = 0;
+
+  function starsSvg(count){
+    var html = '';
+    for(var i = 1; i <= 5; i++){
+      html += '<svg viewBox="0 0 24 24" class="icon' + (i > count ? ' empty' : '') + '" style="fill:currentColor"><use href="#i-star"/></svg>';
+    }
+    return html;
+  }
+
+  function timeAgo(iso){
+    var diff = (Date.now() - new Date(iso).getTime()) / 1000;
+    if(diff < 3600) return 'من شوية';
+    if(diff < 86400) return 'من ' + Math.floor(diff/3600) + ' ساعة';
+    if(diff < 2592000) return 'من ' + Math.floor(diff/86400) + ' يوم';
+    return new Date(iso).toLocaleDateString('ar-EG', { day:'numeric', month:'short' });
+  }
+
+  function renderCards(reviews){
+    var track = document.getElementById('reviewsTrack');
+    var empty = document.getElementById('reviewsEmpty');
+    if(!reviews.length){
+      if(empty) empty.style.display = 'block';
+      return;
+    }
+    if(empty) empty.style.display = 'none';
+    track.innerHTML = reviews.map(function(r){
+      var safeName = (r.name || 'طالب').replace(/</g,'&lt;');
+      var safeComment = r.comment ? r.comment.replace(/</g,'&lt;') : '';
+      return '<div class="review-card">' +
+        '<div class="stars">' + starsSvg(r.rating) + '</div>' +
+        (safeComment ? '<p>' + safeComment + '</p>' : '') +
+        '<div class="who">' +
+          '<span class="av"><svg viewBox="0 0 24 24" class="icon"><use href="#i-user"/></svg></span>' +
+          '<div><b>' + safeName + '</b><small>' + timeAgo(r.created_at) + '</small></div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderSummary(reviews){
+    var box = document.getElementById('reviewsSummary');
+    if(!reviews.length || !box) return;
+    var avg = reviews.reduce(function(s,r){ return s + r.rating; }, 0) / reviews.length;
+    document.getElementById('reviewsScore').textContent = avg.toFixed(1);
+    document.getElementById('reviewsStars').innerHTML = starsSvg(Math.round(avg));
+    document.getElementById('reviewsCount').textContent = reviews.length.toLocaleString('ar-EG') + ' تقييم';
+    box.style.display = 'flex';
+  }
+
+  function loadReviews(){
+    if(!configured) return;
+    fetch(SUPABASE_URL + '/rest/v1/site_reviews?select=id,name,rating,comment,created_at&approved=eq.true&order=created_at.desc&limit=50', {
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+      }
+    }).then(function(res){ return res.ok ? res.json() : []; })
+      .then(function(reviews){
+        renderSummary(reviews);
+        renderCards(reviews);
+      }).catch(function(){});
+  }
+
+  function setupForm(){
+    var picker = document.getElementById('starPicker');
+    var form = document.getElementById('reviewForm');
+    if(!picker || !form) return;
+
+    picker.querySelectorAll('button').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        selectedStars = parseInt(btn.dataset.star, 10);
+        picker.querySelectorAll('button').forEach(function(b){
+          b.classList.toggle('active', parseInt(b.dataset.star, 10) <= selectedStars);
+        });
+      });
+    });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var status = document.getElementById('reviewStatus');
+      var submitBtn = document.getElementById('reviewSubmitBtn');
+      var submitText = document.getElementById('reviewSubmitText');
+      status.className = 'review-form-status';
+
+      var honeypot = form.querySelector('[name=website]').value;
+      var name = document.getElementById('reviewName').value.trim();
+      var comment = document.getElementById('reviewComment').value.trim();
+
+      if(honeypot) return; /* بوت على الأغلب — نتجاهل بصمت */
+      if(!selectedStars){
+        status.textContent = 'اختار تقييم بالنجوم الأول';
+        status.className = 'review-form-status err';
+        return;
+      }
+      if(!name){
+        status.textContent = 'اكتب اسمك الأول';
+        status.className = 'review-form-status err';
+        return;
+      }
+      if(!configured){
+        status.textContent = 'التقييمات مش شغالة دلوقتي، جرّب تاني بعدين';
+        status.className = 'review-form-status err';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitText.textContent = 'بيترسل...';
+
+      fetch(SUPABASE_URL + '/rest/v1/site_reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ name: name, rating: selectedStars, comment: comment || null })
+      }).then(function(res){
+        if(!res.ok) throw new Error('failed');
+        status.textContent = 'شكرًا! تقييمك هيظهر بعد مراجعة بسيطة.';
+        status.className = 'review-form-status ok';
+        form.reset();
+        selectedStars = 0;
+        picker.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+      }).catch(function(){
+        status.textContent = 'حصل خطأ، جرّب تاني بعد شوية';
+        status.className = 'review-form-status err';
+      }).finally(function(){
+        submitBtn.disabled = false;
+        submitText.textContent = 'إرسال التقييم';
+      });
+    });
+  }
+
+  return { init: function(){ setupForm(); loadReviews(); } };
+})();
+
 (function(){
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  renderUpdates();
+  Reviews.init();
 
   /* تسجيل زيارة الصفحة */
   Analytics.track('page_view');
@@ -926,6 +1363,27 @@ var Analytics = (function(){
     });
   }, {threshold:.5});
   counters.forEach(function(el){ cio.observe(el); });
+
+  /* زرار دعم المشروع العائم: يظهر بعد ما الزائر ينزل شوية، ويختفي وهو
+     بالفعل جوه قسم الدعم نفسه عشان مايتكررش بصريًا. */
+  var supportFab = document.getElementById('supportFab');
+  var supportSection = document.getElementById('support');
+  if(supportFab && supportSection){
+    var supportInView = false;
+    supportFab.addEventListener('click', function(){
+      supportSection.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+    });
+    var fabIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ supportInView = en.isIntersecting; });
+      updateFabVisibility();
+    }, { threshold: .15 });
+    fabIo.observe(supportSection);
+    function updateFabVisibility(){
+      var shouldShow = window.scrollY > 700 && !supportInView;
+      supportFab.classList.toggle('show', shouldShow);
+    }
+    window.addEventListener('scroll', updateFabVisibility, { passive: true });
+  }
 
   /* download modal — shown BEFORE any actual download starts */
   var modal = document.getElementById('dl-modal');
