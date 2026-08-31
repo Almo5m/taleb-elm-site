@@ -132,6 +132,7 @@ td.day-cell{text-align:right;font-weight:700;color:var(--navy);font-family:var(-
 .mini-btn.delete{color:var(--coral)}
 .mini-btn.delete:hover{background:var(--coral-pale);border-color:var(--coral)}
 .pending-tag{font-size:10.5px;font-weight:700;color:var(--amber);background:var(--amber-pale);padding:2px 9px;border-radius:99px;font-family:var(--font-d)}
+.verified-tag{font-size:10.5px;font-weight:700;color:var(--mint-dark);background:var(--mint-pale);padding:2px 9px;border-radius:99px;font-family:var(--font-d)}
 
 @media(max-width:640px){
   .funnel-label{width:110px;font-size:11.5px}
@@ -349,7 +350,7 @@ function renderChart(daily){
   var container = document.getElementById('trendChart');
   if(!container || !daily.length) return;
 
-  var W = 640, H = 220, padL = 34, padR = 10, padT = 14, padB = 26;
+  var W = 640, H = 220, padL = 34, padR = 14, padT = 14, padB = 26;
   var innerW = W - padL - padR, innerH = H - padT - padB;
 
   var series = [
@@ -368,8 +369,30 @@ function renderChart(daily){
   function x(i){ return padL + (daily.length > 1 ? (i / (daily.length - 1)) * innerW : innerW / 2); }
   function y(v){ return padT + innerH - (v / niceMax) * innerH; }
 
+  /* خط منحني ناعم (Catmull-Rom مُحوّل لـ Bezier) بدل خطوط مستقيمة حادة */
+  function smoothPath(pts){
+    if(pts.length < 2) return '';
+    if(pts.length === 2) return 'M' + pts[0][0].toFixed(1) + ',' + pts[0][1].toFixed(1) + ' L' + pts[1][0].toFixed(1) + ',' + pts[1][1].toFixed(1);
+    var d = 'M' + pts[0][0].toFixed(1) + ',' + pts[0][1].toFixed(1);
+    for(var i = 0; i < pts.length - 1; i++){
+      var p0 = pts[i === 0 ? 0 : i - 1];
+      var p1 = pts[i];
+      var p2 = pts[i + 1];
+      var p3 = pts[i + 2 < pts.length ? i + 2 : pts.length - 1];
+      var cp1x = p1[0] + (p2[0] - p0[0]) / 6;
+      var cp1y = p1[1] + (p2[1] - p0[1]) / 6;
+      var cp2x = p2[0] - (p3[0] - p1[0]) / 6;
+      var cp2y = p2[1] - (p3[1] - p1[1]) / 6;
+      d += ' C' + cp1x.toFixed(1) + ',' + cp1y.toFixed(1) + ' ' + cp2x.toFixed(1) + ',' + cp2y.toFixed(1) + ' ' + p2[0].toFixed(1) + ',' + p2[1].toFixed(1);
+    }
+    return d;
+  }
+
+  function pointsFor(data){
+    return data.map(function(v, i){ return [x(i), y(v)]; });
+  }
   function pathFor(data){
-    return data.map(function(v, i){ return (i === 0 ? 'M' : 'L') + x(i).toFixed(1) + ',' + y(v).toFixed(1); }).join(' ');
+    return smoothPath(pointsFor(data));
   }
   function areaFor(data){
     return pathFor(data) + ' L' + x(data.length - 1).toFixed(1) + ',' + (padT + innerH) + ' L' + x(0).toFixed(1) + ',' + (padT + innerH) + ' Z';
@@ -384,13 +407,15 @@ function renderChart(daily){
     yLabels += '<text x="' + (padL - 8) + '" y="' + (gy + 3).toFixed(1) + '" text-anchor="end" font-size="10" fill="#5B6479">' + Math.round(v) + '</text>';
   }
 
-  /* تسميات المحور الأفقي: أول يوم، النص، وآخر يوم بس عشان الزحمة */
+  /* تسميات المحور الأفقي: أول يوم، النص، وآخر يوم بس عشان الزحمة —
+     أول تسمية وآخر تسمية بمحاذاة لجوه عشان مايتقطعوش على حواف الرسمة */
   var xLabels = '';
   var labelIdxs = daily.length > 1 ? [0, Math.floor((daily.length - 1) / 2), daily.length - 1] : [0];
   labelIdxs.forEach(function(i){
     var dt = new Date(daily[i].day);
     var label = dt.toLocaleDateString('ar-EG', { day:'numeric', month:'short' });
-    xLabels += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="10" fill="#5B6479">' + label + '</text>';
+    var anchor = i === 0 ? 'start' : (i === daily.length - 1 ? 'end' : 'middle');
+    xLabels += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="' + anchor + '" font-size="10" fill="#5B6479">' + label + '</text>';
   });
 
   var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" style="width:100%;height:220px;font-family:IBM Plex Sans Arabic,sans-serif">' +
@@ -493,6 +518,7 @@ function reviewRowHtml(r, pending){
     '<div class="body">' +
       '<div class="top">' +
         '<b>' + safeName + '</b>' +
+        (r.verified ? '<span class="verified-tag" title="اتأكدنا إنه حمّل التطبيق">✅ موثّق</span>' : '') +
         '<span class="stars">' + starsSvg(r.rating) + '</span>' +
         (pending ? '<span class="pending-tag">في الانتظار</span>' : '') +
         '<span class="date">' + reviewDate(r.created_at) + '</span>' +

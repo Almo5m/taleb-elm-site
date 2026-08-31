@@ -424,6 +424,8 @@ section{position:relative}
 .review-card .stars svg.empty{color:var(--line)}
 .review-card p{font-size:13.5px;color:var(--ink);line-height:1.75}
 .review-card .who{display:flex;align-items:center;gap:9px;margin-top:auto;padding-top:6px}
+.verified-badge{margin-inline-start:auto;color:var(--mint-dark);flex-shrink:0;display:flex}
+.verified-badge svg{width:18px;height:18px;fill:currentColor}
 .review-card .who .av{width:30px;height:30px;border-radius:50%;background:var(--navy-pale);color:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .review-card .who .av svg{width:14px;height:14px}
 .review-card .who b{font-family:var(--font-d);font-size:12.5px;color:var(--navy);display:block}
@@ -555,6 +557,7 @@ footer{padding:56px 0 26px}
     <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11.5" height="11.5" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></symbol>
     <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3.5 7.5A2.5 2.5 0 0 1 6 5h11a1 1 0 0 1 1 1v2"/><rect x="3.5" y="7.5" width="17" height="12" rx="2.5"/><circle cx="16.5" cy="13.5" r="1.4"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5 9.5 17.5 19.5 6.5"/></symbol>
+    <symbol id="i-check-seal" viewBox="0 0 24 24"><path d="m9 12 2 2 4-4"/><path d="M12 2 9.5 4.5 6 4l-.5 3.5L2 9l1.5 3L2 15l3.5 1.5L6 20l3.5-.5L12 22l2.5-2.5L18 20l.5-3.5L22 15l-1.5-3L22 9l-3.5-1.5L18 4l-3.5.5L12 2Z"/></symbol>
     <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18h10.5a3.5 3.5 0 0 0 .4-6.98A5.5 5.5 0 0 0 7.3 9.1 4 4 0 0 0 7 18Z"/></symbol>
     <symbol id="i-device" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
@@ -1092,23 +1095,27 @@ const SUPABASE_URL = "https://nokgvbmngcgkfjlcmvmd.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_r96Xijbc6491_olkX2Gaqw_49BAVA48";
 
 /* =====================================================================
+   معرّف عشوائي واحد للزائر، مخزّن في المتصفح ومشترك بين التتبع والتقييمات
+   (عشان نقدر نتحقق إن اللي بيقيّم نفس اللي دوس تحميل من قبل).
+   ===================================================================== */
+function getVisitorId(){
+  try{
+    var id = localStorage.getItem('ti_vid');
+    if(!id){
+      id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('v-' + Date.now() + '-' + Math.random().toString(36).slice(2));
+      localStorage.setItem('ti_vid', id);
+    }
+    return id;
+  }catch(e){ return 'anon-' + Math.random().toString(36).slice(2); }
+}
+
+/* =====================================================================
    تتبّع بسيط وخاص: بيسجّل زيارة الصفحة، ووصول المستخدم لمرحلة التحميل،
    والتحميل الفعلي، ومتابعة قناة الواتساب. مفيش أي بيانات شخصية بتتسجل —
    بس معرّف عشوائي مخزّن في المتصفح عشان نعرف نفرّق زائر عن التاني.
    ===================================================================== */
 var Analytics = (function(){
   var configured = SUPABASE_URL.indexOf('ضع_') !== 0 && SUPABASE_ANON_KEY.indexOf('ضع_') !== 0;
-
-  function getVisitorId(){
-    try{
-      var id = localStorage.getItem('ti_vid');
-      if(!id){
-        id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('v-' + Date.now() + '-' + Math.random().toString(36).slice(2));
-        localStorage.setItem('ti_vid', id);
-      }
-      return id;
-    }catch(e){ return 'anon-' + Math.random().toString(36).slice(2); }
-  }
 
   function track(eventType){
     if(!configured) return;
@@ -1255,6 +1262,7 @@ var Reviews = (function(){
         '<div class="who">' +
           '<span class="av"><svg viewBox="0 0 24 24" class="icon"><use href="#i-user"/></svg></span>' +
           '<div><b>' + safeName + '</b><small>' + timeAgo(r.created_at) + '</small></div>' +
+          (r.verified ? '<span class="verified-badge" title="اتأكدنا إنه حمّل التطبيق فعلاً"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check-seal"/></svg></span>' : '') +
         '</div>' +
       '</div>';
     }).join('');
@@ -1272,7 +1280,7 @@ var Reviews = (function(){
 
   function loadReviews(){
     if(!configured) return;
-    fetch(SUPABASE_URL + '/rest/v1/site_reviews?select=id,name,rating,comment,created_at&approved=eq.true&order=created_at.desc&limit=50', {
+    fetch(SUPABASE_URL + '/rest/v1/site_reviews?select=id,name,rating,comment,created_at,verified&approved=eq.true&order=created_at.desc&limit=50', {
       headers: {
         'apikey': SUPABASE_ANON_KEY,
         'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
@@ -1329,15 +1337,14 @@ var Reviews = (function(){
       submitBtn.disabled = true;
       submitText.textContent = 'بيترسل...';
 
-      fetch(SUPABASE_URL + '/rest/v1/site_reviews', {
+      fetch(SUPABASE_URL + '/rest/v1/rpc/submit_review', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'apikey': SUPABASE_ANON_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-          'Prefer': 'return=minimal'
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
         },
-        body: JSON.stringify({ name: name, rating: selectedStars, comment: comment || null })
+        body: JSON.stringify({ p_name: name, p_rating: selectedStars, p_comment: comment || null, p_visitor_id: getVisitorId() })
       }).then(function(res){
         if(!res.ok) throw new Error('failed');
         status.textContent = 'شكرًا! تقييمك هيظهر بعد مراجعة بسيطة.';
