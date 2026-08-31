@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js" defer></script>
 <style>
 :root{
   --paper:#F6F7FA; --surface:#FFFFFF; --ink:#131A2A; --ink-soft:#5B6479; --line:#E7EAF1;
@@ -79,6 +78,8 @@ input{font:inherit}
 .kpi.k-conv .ic{background:var(--lavender-pale);color:var(--lavender)}
 
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:24px;margin-bottom:20px}
+.trend-chart{width:100%}
+.trend-chart svg{display:block}
 .panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
 .panel-head h2{font-family:var(--font-d);font-weight:800;font-size:15px;color:var(--navy)}
 .panel-head .legend{display:flex;gap:14px;font-size:11.5px;color:var(--ink-soft)}
@@ -239,7 +240,7 @@ td.day-cell{text-align:right;font-weight:700;color:var(--navy);font-family:var(-
           <span><i style="background:var(--mint)"></i> حمّلوا</span>
         </div>
       </div>
-      <canvas id="trendChart" height="90"></canvas>
+      <div id="trendChart" class="trend-chart"></div>
     </div>
 
     <div class="panel">
@@ -302,7 +303,6 @@ const SUPABASE_ANON_KEY = "sb_publishable_r96Xijbc6491_olkX2Gaqw_49BAVA48";
    في حد ذاتهم مش متسربين. */
 const SESSION_KEY = 'ti_dash_pw';
 
-var chart = null;
 var lastDaily = [];
 
 function fmt(n){ return (n||0).toLocaleString('ar-EG'); }
@@ -319,7 +319,11 @@ async function callRpc(fn, body){
     body: JSON.stringify(body)
   });
   if(!res.ok) throw new Error('unauthorized');
-  return res.json();
+  /* بعض الدوال (زي admin_review_action) بترجع بلا محتوى (204) —
+     لو حاولنا نعمل .json() على رد فاضي هيرمي خطأ رغم إن العملية
+     نفسها نجحت في قاعدة البيانات، فبنتأكد الأول إن فيه محتوى فعلاً. */
+  var text = await res.text();
+  return text ? JSON.parse(text) : null;
 }
 
 function renderFunnel(stats){
@@ -342,35 +346,63 @@ function renderFunnel(stats){
 }
 
 function renderChart(daily){
-  var ctx = document.getElementById('trendChart');
-  if(!window.Chart || !ctx) return;
-  var labels = daily.map(function(d){
-    var dt = new Date(d.day);
-    return dt.toLocaleDateString('ar-EG', { day:'numeric', month:'short' });
+  var container = document.getElementById('trendChart');
+  if(!container || !daily.length) return;
+
+  var W = 640, H = 220, padL = 34, padR = 10, padT = 14, padB = 26;
+  var innerW = W - padL - padR, innerH = H - padT - padB;
+
+  var series = [
+    { data: daily.map(function(d){ return d.page_views; }), color: '#16214A' },
+    { data: daily.map(function(d){ return d.reached_download; }), color: '#F5A524' },
+    { data: daily.map(function(d){ return d.downloaded; }), color: '#17B978' }
+  ];
+  var allValues = [];
+  series.forEach(function(s){ allValues = allValues.concat(s.data); });
+  var maxVal = Math.max(1, Math.max.apply(null, allValues));
+  /* نقرّب السقف لأعلى رقم "مظبوط" (5, 10, 20, 50...) عشان خطوط الشبكة تبان منطقية */
+  var niceMax = Math.pow(10, Math.floor(Math.log10(maxVal)));
+  while(niceMax * 5 < maxVal) niceMax *= 5;
+  while(niceMax < maxVal) niceMax *= 2;
+
+  function x(i){ return padL + (daily.length > 1 ? (i / (daily.length - 1)) * innerW : innerW / 2); }
+  function y(v){ return padT + innerH - (v / niceMax) * innerH; }
+
+  function pathFor(data){
+    return data.map(function(v, i){ return (i === 0 ? 'M' : 'L') + x(i).toFixed(1) + ',' + y(v).toFixed(1); }).join(' ');
+  }
+  function areaFor(data){
+    return pathFor(data) + ' L' + x(data.length - 1).toFixed(1) + ',' + (padT + innerH) + ' L' + x(0).toFixed(1) + ',' + (padT + innerH) + ' Z';
+  }
+
+  /* خطوط شبكة أفقية (4 مستويات) + تسميات المحور الرأسي */
+  var gridLines = '', yLabels = '';
+  for(var g = 0; g <= 4; g++){
+    var v = (niceMax / 4) * g;
+    var gy = y(v);
+    gridLines += '<line x1="' + padL + '" y1="' + gy.toFixed(1) + '" x2="' + (W - padR) + '" y2="' + gy.toFixed(1) + '" stroke="#E7EAF1" stroke-width="1"/>';
+    yLabels += '<text x="' + (padL - 8) + '" y="' + (gy + 3).toFixed(1) + '" text-anchor="end" font-size="10" fill="#5B6479">' + Math.round(v) + '</text>';
+  }
+
+  /* تسميات المحور الأفقي: أول يوم، النص، وآخر يوم بس عشان الزحمة */
+  var xLabels = '';
+  var labelIdxs = daily.length > 1 ? [0, Math.floor((daily.length - 1) / 2), daily.length - 1] : [0];
+  labelIdxs.forEach(function(i){
+    var dt = new Date(daily[i].day);
+    var label = dt.toLocaleDateString('ar-EG', { day:'numeric', month:'short' });
+    xLabels += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="10" fill="#5B6479">' + label + '</text>';
   });
-  if(chart) chart.destroy();
-  chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [
-        { label:'زيارات', data: daily.map(function(d){return d.page_views}), borderColor:'#16214A', backgroundColor:'rgba(22,33,74,.06)', tension:.35, fill:true, pointRadius:0, borderWidth:2 },
-        { label:'وصلوا للتحميل', data: daily.map(function(d){return d.reached_download}), borderColor:'#F5A524', backgroundColor:'rgba(245,165,36,.06)', tension:.35, fill:true, pointRadius:0, borderWidth:2 },
-        { label:'حمّلوا', data: daily.map(function(d){return d.downloaded}), borderColor:'#17B978', backgroundColor:'rgba(23,185,120,.08)', tension:.35, fill:true, pointRadius:0, borderWidth:2 }
-      ]
-    },
-    options: {
-      responsive:true,
-      plugins:{ legend:{ display:false } },
-      scales:{
-        x:{ grid:{ display:false }, ticks:{ font:{ family:'IBM Plex Sans Arabic', size:11 } } },
-        y:{ beginAtZero:true, grid:{ color:'#E7EAF1' }, ticks:{ font:{ family:'IBM Plex Sans Arabic', size:11 }, precision:0 } }
-      },
-      interaction:{ intersect:false, mode:'index' }
-    }
-  });
-  /* تأمين إضافي: لو المتصفح لسه محسبش أبعاد الكارت الصح وقت الإنشاء */
-  requestAnimationFrame(function(){ if(chart) chart.resize(); });
+
+  var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" style="width:100%;height:220px;font-family:IBM Plex Sans Arabic,sans-serif">' +
+    gridLines +
+    series.map(function(s){
+      return '<path d="' + areaFor(s.data) + '" fill="' + s.color + '" opacity="0.07"/>' +
+             '<path d="' + pathFor(s.data) + '" fill="none" stroke="' + s.color + '" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>';
+    }).join('') +
+    yLabels + xLabels +
+  '</svg>';
+
+  container.innerHTML = daily.length ? svg : '';
 }
 
 function renderDailyTable(daily){
@@ -412,9 +444,6 @@ async function loadStats(password, days){
     document.getElementById('loadingScreen').style.display = 'none';
     document.getElementById('content').style.display = 'block';
 
-    /* لازم الكارت يبقى ظاهر (display غير none) الأول قبل ما نرسم فيه، وإلا
-       Chart.js بيحسب مساحة صفر ومايرسمش حاجة. عشان كده renderChart جاي هنا
-       بعد إظهار المحتوى مش قبله. */
     renderChart(daily);
     renderDailyTable(daily);
   }catch(e){

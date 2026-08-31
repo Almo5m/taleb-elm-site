@@ -116,10 +116,17 @@ section{position:relative}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-d);font-weight:800;font-size:16px}
 .brand .mark{width:34px;height:34px;border-radius:10px;overflow:hidden;flex-shrink:0;box-shadow:var(--shadow)}
 .brand .mark img{width:100%;height:100%;object-fit:cover}
-.topnav{display:flex;align-items:center;gap:26px}
-.topnav a{font-size:14px;color:var(--ink-soft);font-weight:600;transition:color .2s}
+.topnav{display:flex;align-items:center;gap:22px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.topnav::-webkit-scrollbar{display:none}
+.topnav a{font-size:14px;color:var(--ink-soft);font-weight:600;transition:color .2s;white-space:nowrap;flex-shrink:0;position:relative;padding-bottom:2px}
 .topnav a:hover{color:var(--ink)}
-@media (max-width:760px){.topnav a{display:none}}
+.topnav a.active{color:var(--mint-dark)}
+.topnav a.active::after{content:'';position:absolute;right:0;left:0;bottom:-3px;height:2px;border-radius:2px;background:var(--mint-dark)}
+@media (max-width:760px){
+  #topbar .inner{flex-wrap:wrap;row-gap:10px}
+  .topnav{order:3;width:100%;justify-content:flex-start;padding-bottom:2px;mask-image:linear-gradient(to left, transparent, #000 18px);-webkit-mask-image:linear-gradient(to left, transparent, #000 18px)}
+}
+[id]{scroll-margin-top:96px}
 
 /* ===== HERO ===== */
 #hero{padding:64px 0 40px}
@@ -385,6 +392,16 @@ section{position:relative}
 }
 .update-item ul{display:flex;flex-direction:column;gap:8px}
 .update-item li{display:flex;align-items:flex-start;gap:9px;color:var(--ink-soft);font-size:14px;line-height:1.6}
+.updates-toggle{
+  display:flex;align-items:center;gap:8px;margin-top:8px;padding:11px 18px;
+  background:var(--surface);border:1px solid var(--line);border-radius:999px;
+  font-family:var(--font-d);font-weight:700;font-size:13px;color:var(--navy);
+  transition:all .2s;
+}
+.updates-toggle:hover{border-color:var(--mint);color:var(--mint-dark)}
+.updates-toggle svg{width:14px;height:14px;transition:transform .25s var(--ease)}
+.updates-toggle.is-open svg{transform:rotate(180deg)}
+.updates-older .update-item:first-child{padding-top:4px}
 .update-item li svg{width:15px;height:15px;color:var(--mint-dark);flex-shrink:0;margin-top:3px}
 
 /* ===== REVIEWS ===== */
@@ -546,6 +563,7 @@ footer{padding:56px 0 26px}
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4.5v15M4.5 12h15"/></symbol>
     <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.3 0-2.5-.3-3.6-.8L3 21l1.8-5.4A8.5 8.5 0 1 1 21 11.5Z"/></symbol>
     <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Z"/><path d="M10 21a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17l-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1-3.6 4-5.5 7-5.5s6 1.9 7 5.5"/></symbol>
     <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></symbol>
@@ -558,10 +576,13 @@ footer{padding:56px 0 26px}
       <span class="mark"><img src="assets/app-icon.png" alt="طالب علم"></span>
       طالب علم
     </div>
-    <nav class="topnav">
-      <a href="#features">مميزات</a>
-      <a href="#gallery">لقطات من التطبيق</a>
-      <a href="#support">ادعم النشر</a>
+    <nav class="topnav" id="topnav">
+      <a href="#bo-assistant" data-nav>بو</a>
+      <a href="#features" data-nav>مميزات</a>
+      <a href="#gallery" data-nav>لقطات</a>
+      <a href="#forum" data-nav>المنتدى</a>
+      <a href="#updates" data-nav>التحديثات</a>
+      <a href="#support" data-nav>ادعم النشر</a>
     </nav>
     <button class="btn btn-mint btn-sm" data-download><span>حمّل التطبيق</span></button>
   </div>
@@ -599,21 +620,6 @@ footer{padding:56px 0 26px}
 </section>
 
 <!-- ============ SUBJECTS ============ -->
-<section id="subjects">
-  <div class="wrap">
-    <p class="eyebrow" style="justify-content:center;display:flex" data-reveal><i></i>أمثلة من موادك</p>
-    <div class="subject-grid" data-reveal>
-      <div class="subject-chip"><span class="ic" style="background:var(--lavender-pale);color:var(--lavender)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-flask"/></svg></span><b>الكيمياء</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--teal-pale);color:var(--teal)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-leaf"/></svg></span><b>الأحياء</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--lavender-pale);color:var(--lavender)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-bolt"/></svg></span><b>الفيزياء</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-book"/></svg></span><b>اللغة العربية</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--coral-pale);color:var(--coral)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-globe"/></svg></span><b>الإنجليزية</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--navy-pale);color:var(--navy)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-plus"/></svg></span><b>ومواد تانية</b></div>
-    </div>
-    <p class="section-sub" style="margin:18px auto 0" data-reveal>دي مجرد أمثلة، مش القايمة كلها — التطبيق بيضيفلك موادك أول ما تحدد نظامك وصفك وشعبتك أو مسارك.</p>
-  </div>
-</section>
-
 <!-- ============ WHO ============ -->
 <section id="who">
   <div class="wrap" data-reveal>
@@ -624,6 +630,15 @@ footer{padding:56px 0 26px}
       <span class="badge card"><svg viewBox="0 0 24 24" class="icon"><use href="#i-book"/></svg> الثانوية العامة — علمي وأدبي</span>
       <span class="badge card"><svg viewBox="0 0 24 24" class="icon"><use href="#i-globe"/></svg> البكالوريا المصرية — بمساراتها الأربعة</span>
     </div>
+    <div class="subject-grid" style="margin-top:40px" data-reveal>
+      <div class="subject-chip"><span class="ic" style="background:var(--lavender-pale);color:var(--lavender)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-flask"/></svg></span><b>الكيمياء</b></div>
+      <div class="subject-chip"><span class="ic" style="background:var(--teal-pale);color:var(--teal)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-leaf"/></svg></span><b>الأحياء</b></div>
+      <div class="subject-chip"><span class="ic" style="background:var(--lavender-pale);color:var(--lavender)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-bolt"/></svg></span><b>الفيزياء</b></div>
+      <div class="subject-chip"><span class="ic" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-book"/></svg></span><b>اللغة العربية</b></div>
+      <div class="subject-chip"><span class="ic" style="background:var(--coral-pale);color:var(--coral)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-globe"/></svg></span><b>الإنجليزية</b></div>
+      <div class="subject-chip"><span class="ic" style="background:var(--navy-pale);color:var(--navy)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-plus"/></svg></span><b>ومواد تانية</b></div>
+    </div>
+    <p class="section-sub" style="margin:16px auto 0" data-reveal>دي مجرد أمثلة، مش القايمة كلها — التطبيق بيضيفلك موادك أول ما تحدد نظامك وصفك وشعبتك أو مسارك.</p>
   </div>
 </section>
 
@@ -699,6 +714,17 @@ footer{padding:56px 0 26px}
       </div>
     </div>
 
+    <div class="feature-big">
+      <div class="phone" data-reveal="scale">
+        <div class="screen"><img src="assets/screenshots/lectures.jpg" alt="متابعة المحاضرات" loading="lazy"></div>
+      </div>
+      <div class="feature-text" data-reveal>
+        <span class="eyebrow"><i></i>ولا محاضرة تفوتك</span>
+        <h3>متابعة المحاضرات أول بأول</h3>
+        <p>كل محاضرة أونلاين أو أونساعة ليها ميعادها في التطبيق، وعلّم أي محاضرة اتفرجت عليها بضغطة واحدة. والستريك بتاعك بقى بيحسب كمان أيام مشاهدة المحاضرات، مش بس أيام المذاكرة.</p>
+      </div>
+    </div>
+
     <div class="feature-grid">
       <div class="f-card card" data-reveal>
         <div class="ic-round" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-timer"/></svg></div>
@@ -723,22 +749,22 @@ footer{padding:56px 0 26px}
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- ============ LECTURES ============ -->
-<section id="lectures">
-  <div class="wrap">
-    <div class="feature-big">
-      <div class="phone" data-reveal="scale">
-        <div class="screen"><img src="assets/screenshots/lectures.jpg" alt="متابعة المحاضرات" loading="lazy"></div>
+    <div class="strip" style="margin-top:20px">
+      <div class="strip-main" data-reveal>
+        <div class="ic-round"><svg viewBox="0 0 24 24" class="icon"><use href="#i-trophy"/></svg></div>
+        <h4>إنجازات ولوحة ترتيب</h4>
+        <p>افتح إنجازات مع كل ساعة مذاكرة ومهمة بتخلصها، وقارن انتظامك بزمايلك في لوحة الترتيب.</p>
       </div>
-      <div class="feature-text" data-reveal>
-        <span class="eyebrow"><i></i>ولا محاضرة تفوتك</span>
-        <h3>متابعة المحاضرات أول بأول</h3>
-        <p>كل محاضرة أونلاين أو أونساعة ليها ميعادها في التطبيق، وعلّم أي محاضرة اتفرجت عليها بضغطة واحدة. والستريك بتاعك بقى بيحسب كمان أيام مشاهدة المحاضرات، مش بس أيام المذاكرة.</p>
+      <div class="mini-card card" data-reveal>
+        <span class="num"><span class="cnt" data-count="10">0</span>+</span>
+        <span class="lbl">إنجاز تقدر تفتحه</span>
+      </div>
+      <div class="mini-card card" data-reveal>
+        <span class="num">🔥</span>
+        <span class="lbl">تتبع أيامك المتتالية</span>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -770,57 +796,7 @@ footer{padding:56px 0 26px}
   </div>
 </section>
 
-<!-- ============ GAMIFY ============ -->
-<section id="gamify">
-  <div class="wrap">
-    <div class="strip">
-      <div class="strip-main" data-reveal>
-        <div class="ic-round"><svg viewBox="0 0 24 24" class="icon"><use href="#i-trophy"/></svg></div>
-        <h4>إنجازات ولوحة ترتيب</h4>
-        <p>افتح إنجازات مع كل ساعة مذاكرة ومهمة بتخلصها، وقارن انتظامك بزمايلك في لوحة الترتيب.</p>
-      </div>
-      <div class="mini-card card" data-reveal>
-        <span class="num"><span class="cnt" data-count="10">0</span>+</span>
-        <span class="lbl">إنجاز تقدر تفتحه</span>
-      </div>
-      <div class="mini-card card" data-reveal>
-        <span class="num">🔥</span>
-        <span class="lbl">تتبع أيامك المتتالية</span>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ DATA CLARITY ============ -->
-<section id="clarity">
-  <div class="wrap">
-    <div class="clarity-card card" data-reveal>
-      <div class="clarity-head">
-        <span class="eyebrow"><i></i>بصراحة ووضوح</span>
-        <h2 class="section-title">بياناتك فين بالظبط؟</h2>
-      </div>
-      <div class="clarity-cols">
-        <div class="clarity-col local">
-          <div class="col-head"><svg viewBox="0 0 24 24" class="icon"><use href="#i-device"/></svg><b>على جهازك بس</b></div>
-          <ul>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> موادك ودروسك وملخصاتك</li>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> جدول مذاكرتك ومواعيدك</li>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> جلسات المذاكرة وإنجازاتك</li>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> ملاحظاتك الشخصية</li>
-          </ul>
-        </div>
-        <div class="clarity-col server">
-          <div class="col-head"><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg><b>محتاج اتصال بالسيرفر</b></div>
-          <ul>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg> تسجيل الدخول لحسابك</li>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg> منتدى الطلاب — أسئلتك وردودك</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ============ FORUM ============ -->
 <section id="forum">
   <div class="wrap">
@@ -852,7 +828,37 @@ footer{padding:56px 0 26px}
   <div class="wrap founder-card card" data-reveal="scale">
     <span class="quote-mark">"</span>
     <p>أنا معاذ، صممت طالب علم وأنا لسه طالب زيك. عارف قد إيه صعب إنك تنظم وقتك في السنين دي — عشان كده بنيت التطبيق ده، ولسه بطوّره باستمرار.</p>
-    <span class="who">صانع التطبيق</span>
+    <span class="who">Al-Mo</span>
+  </div>
+</section>
+
+<!-- ============ DATA CLARITY ============ -->
+<section id="clarity">
+  <div class="wrap">
+    <div class="clarity-card card" data-reveal>
+      <div class="clarity-head">
+        <span class="eyebrow"><i></i>بصراحة ووضوح</span>
+        <h2 class="section-title">بياناتك فين بالظبط؟</h2>
+      </div>
+      <div class="clarity-cols">
+        <div class="clarity-col local">
+          <div class="col-head"><svg viewBox="0 0 24 24" class="icon"><use href="#i-device"/></svg><b>على جهازك بس</b></div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> موادك ودروسك وملخصاتك</li>
+            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> جدول مذاكرتك ومواعيدك</li>
+            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> جلسات المذاكرة وإنجازاتك</li>
+            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> ملاحظاتك الشخصية</li>
+          </ul>
+        </div>
+        <div class="clarity-col server">
+          <div class="col-head"><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg><b>محتاج اتصال بالسيرفر</b></div>
+          <ul>
+            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg> تسجيل الدخول لحسابك</li>
+            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg> منتدى الطلاب — أسئلتك وردودك</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1074,7 +1080,7 @@ footer{padding:56px 0 26px}
    حط لينك تحميل ملف الـ APK هنا (من GitHub Releases مثلًا) — مكان واحد بس
    وكل زراير التحميل في الموقع (فوق، النص، وقسم الـ CTA) هتستخدمه تلقائي.
    ===================================================================== */
-const APK_URL = "https://github.com/moaz2009amen-stack/taleb-elm-site/releases/download/v2.0/taleb-elm-v2.0.0.apk";
+const APK_URL = "https://github.com/moaz2009amen-stack/taleb-elm-site/releases/download/v1.0/taleb-elm-v2.0.0.apk";
 const WA_CHANNEL_URL = "https://whatsapp.com/channel/0029VbDeexfIyPtIvmXFRG2r";
 
 /* =====================================================================
@@ -1167,7 +1173,8 @@ const APP_UPDATES = [
 function renderUpdates(){
   var list = document.getElementById('updatesList');
   if(!list) return;
-  list.innerHTML = APP_UPDATES.map(function(u){
+
+  function itemHtml(u){
     return '<div class="update-item' + (u.latest ? ' is-latest' : '') + '">' +
       '<div class="update-top">' +
         '<span class="update-version">' + u.version + '</span>' +
@@ -1178,7 +1185,34 @@ function renderUpdates(){
         return '<li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg>' + t + '</li>';
       }).join('') + '</ul>' +
     '</div>';
-  }).join('');
+  }
+
+  var latestItems = APP_UPDATES.filter(function(u){ return u.latest; });
+  var olderItems = APP_UPDATES.filter(function(u){ return !u.latest; });
+
+  var html = latestItems.map(itemHtml).join('');
+  if(olderItems.length){
+    html += '<div class="updates-older" id="updatesOlder" hidden>' + olderItems.map(itemHtml).join('') + '</div>' +
+      '<button type="button" class="updates-toggle" id="updatesToggle">' +
+        '<span>شوف الإصدارات القديمة (' + olderItems.length + ')</span>' +
+        '<svg viewBox="0 0 24 24" class="icon"><use href="#i-chevron"/></svg>' +
+      '</button>';
+  }
+  list.innerHTML = html;
+
+  var toggleBtn = document.getElementById('updatesToggle');
+  var olderBox = document.getElementById('updatesOlder');
+  if(toggleBtn && olderBox){
+    toggleBtn.addEventListener('click', function(){
+      var isHidden = olderBox.hasAttribute('hidden');
+      if(isHidden){ olderBox.removeAttribute('hidden'); }
+      else{ olderBox.setAttribute('hidden', ''); }
+      toggleBtn.classList.toggle('is-open', isHidden);
+      toggleBtn.querySelector('span').textContent = isHidden
+        ? 'إخفاء الإصدارات القديمة'
+        : 'شوف الإصدارات القديمة (' + olderItems.length + ')';
+    });
+  }
 }
 
 /* =====================================================================
@@ -1383,6 +1417,40 @@ var Reviews = (function(){
       supportFab.classList.toggle('show', shouldShow);
     }
     window.addEventListener('scroll', updateFabVisibility, { passive: true });
+  }
+
+  /* Scrollspy: يميّز في قائمة التنقل فوق الرابط بتاع القسم اللي الزائر
+     فيه دلوقتي، عشان يفضل حاسس بمكانه في الصفحة. */
+  var navLinks = document.querySelectorAll('.topnav a[data-nav]');
+  if(navLinks.length){
+    var navMap = {};
+    navLinks.forEach(function(a){
+      var id = a.getAttribute('href').slice(1);
+      var section = document.getElementById(id);
+      if(section) navMap[id] = a;
+    });
+    var spyIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        var link = navMap[en.target.id];
+        if(!link) return;
+        if(en.isIntersecting) link.classList.add('active');
+        else link.classList.remove('active');
+      });
+      /* لو أكتر من قسم ظاهر جزئيًا في نفس اللحظة، خلي الأقرب لمنتصف الشاشة هو النشط */
+      var visible = Array.from(navLinks).filter(function(a){ return a.classList.contains('active'); });
+      if(visible.length > 1){
+        visible.forEach(function(a){ a.classList.remove('active'); });
+        var mid = window.innerHeight / 2;
+        var closest = null, closestDist = Infinity;
+        Object.keys(navMap).forEach(function(id){
+          var r = document.getElementById(id).getBoundingClientRect();
+          var dist = Math.abs((r.top + r.bottom) / 2 - mid);
+          if(dist < closestDist){ closestDist = dist; closest = navMap[id]; }
+        });
+        if(closest) closest.classList.add('active');
+      }
+    }, { rootMargin: '-96px 0px -60% 0px', threshold: 0 });
+    Object.keys(navMap).forEach(function(id){ spyIo.observe(document.getElementById(id)); });
   }
 
   /* download modal — shown BEFORE any actual download starts */
