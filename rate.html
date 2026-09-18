@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قيّم طالب علم</title>
+<meta name="description" content="شاركنا رأيك في تطبيق طالب علم">
+<link rel="icon" href="favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F7FA; --surface:#FFFFFF; --ink:#131A2A; --ink-soft:#5B6479; --line:#E7EAF1;
+  --mint:#17B978; --mint-dark:#0E9D63; --mint-pale:#E7F8F0;
+  --navy:#16214A; --amber:#F5A524;
+  --font-d:'Cairo',sans-serif; --font-b:'IBM Plex Sans Arabic',sans-serif;
+  --shadow-lg:0 20px 45px -20px rgba(19,26,42,.22);
+  --ease:cubic-bezier(.19,1,.22,1);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:var(--font-b);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow-lg);
+  max-width:420px;width:100%;padding:36px 30px;text-align:center;
+}
+.icon-badge{width:64px;height:64px;border-radius:18px;overflow:hidden;margin:0 auto 18px;box-shadow:0 10px 24px -10px rgba(19,38,62,.35)}
+.icon-badge img{width:100%;height:100%;object-fit:cover;display:block}
+h1{font-family:var(--font-d);font-weight:800;font-size:21px;color:var(--navy);margin:0 0 6px}
+.sub{color:var(--ink-soft);font-size:13.5px;margin:0 0 28px;line-height:1.7}
+
+.star-picker{display:flex;gap:10px;flex-direction:row-reverse;justify-content:center;margin-bottom:6px}
+.star-picker button{background:none;border:0;padding:2px;color:var(--line);transition:transform .15s var(--ease), color .15s;cursor:pointer}
+.star-picker button svg{width:38px;height:38px}
+.star-picker button.active,.star-picker button:hover,.star-picker button:hover ~ button{color:var(--amber)}
+.star-label{font-family:var(--font-d);font-weight:700;font-size:13px;color:var(--amber);height:18px;margin-bottom:22px}
+
+.row{text-align:right;margin-bottom:16px}
+.row label{display:block;font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:8px;font-family:var(--font-d)}
+.row input[type=text],.row textarea{
+  width:100%;padding:13px 16px;border-radius:14px;border:1.5px solid var(--line);
+  font-family:var(--font-b);font-size:14px;transition:border-color .2s;resize:vertical;background:var(--paper);
+}
+.row input[type=text]:focus,.row textarea:focus{outline:none;border-color:var(--mint);background:var(--surface)}
+
+.hp-field{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;padding:0}
+
+.submit-btn{
+  width:100%;padding:15px;border-radius:99px;border:0;background:var(--mint);color:#fff;
+  font-family:var(--font-d);font-weight:800;font-size:15px;cursor:pointer;transition:background .2s;margin-top:6px;
+}
+.submit-btn:hover{background:var(--mint-dark)}
+.submit-btn:disabled{opacity:.6;cursor:default}
+
+.status{font-size:13px;margin-top:14px;padding:12px 14px;border-radius:12px;display:none}
+.status.err{display:block;background:#FDE9EA;color:#F45B69}
+
+#thanks{display:none}
+#thanks .big-icon{width:72px;height:72px;border-radius:50%;background:var(--mint-pale);color:var(--mint-dark);display:flex;align-items:center;justify-content:center;margin:0 auto 18px}
+#thanks .big-icon svg{width:34px;height:34px}
+#thanks h1{margin-bottom:10px}
+.dl-link{
+  display:inline-flex;align-items:center;gap:8px;margin-top:20px;color:var(--mint-dark);
+  font-family:var(--font-d);font-weight:700;font-size:13px;text-decoration:underline;
+}
+</style>
+</head>
+<body>
+
+<div class="card" id="formCard">
+  <div class="icon-badge"><img src="assets/app-icon.png" alt="طالب علم"></div>
+  <h1>إيه رأيك في طالب علم؟</h1>
+  <p class="sub">دقيقة واحدة بس — رأيك بيساعد طلاب تانيين يعرفوا التطبيق أحسن.</p>
+
+  <form id="rateForm">
+    <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
+
+    <div class="star-picker" id="starPicker">
+      <button type="button" data-star="5" aria-label="5 نجوم"><svg viewBox="0 0 24 24" style="fill:currentColor"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17l-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z"/></svg></button>
+      <button type="button" data-star="4" aria-label="4 نجوم"><svg viewBox="0 0 24 24" style="fill:currentColor"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17l-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z"/></svg></button>
+      <button type="button" data-star="3" aria-label="3 نجوم"><svg viewBox="0 0 24 24" style="fill:currentColor"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17l-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z"/></svg></button>
+      <button type="button" data-star="2" aria-label="نجمتين"><svg viewBox="0 0 24 24" style="fill:currentColor"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17l-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z"/></svg></button>
+      <button type="button" data-star="1" aria-label="نجمة واحدة"><svg viewBox="0 0 24 24" style="fill:currentColor"><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9L12 17l-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5Z"/></svg></button>
+    </div>
+    <div class="star-label" id="starLabel">&nbsp;</div>
+
+    <div class="row">
+      <label for="rName">اسمك</label>
+      <input type="text" id="rName" maxlength="60" placeholder="اسمك اللي هيظهر مع التقييم" required>
+    </div>
+    <div class="row">
+      <label for="rComment">تعليقك (اختياري)</label>
+      <textarea id="rComment" maxlength="500" rows="3" placeholder="إيه اللي عجبك أو ممكن نحسّنه؟"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn"><span id="submitText">إرسال التقييم</span></button>
+    <div class="status" id="status"></div>
+  </form>
+</div>
+
+<div class="card" id="thanks">
+  <div class="big-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg></div>
+  <h1>شكرًا على وقتك! 🎉</h1>
+  <p class="sub">تقييمك هيظهر للطلاب التانيين بعد مراجعة بسيطة.</p>
+  <a class="dl-link" href="https://almo5m.github.io/taleb-elm-site/" target="_blank" rel="noopener">ارجع لموقع طالب علم</a>
+</div>
+
+<script>
+const SUPABASE_URL = "https://nokgvbmngcgkfjlcmvmd.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_r96Xijbc6491_olkX2Gaqw_49BAVA48";
+
+function getVisitorId(){
+  try{
+    var id = localStorage.getItem('ti_vid');
+    if(!id){
+      id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('v-' + Date.now() + '-' + Math.random().toString(36).slice(2));
+      localStorage.setItem('ti_vid', id);
+    }
+    return id;
+  }catch(e){ return 'anon-' + Math.random().toString(36).slice(2); }
+}
+
+var STAR_LABELS = { 1:'مش عاجبني 😕', 2:'متوسط', 3:'كويس', 4:'حلو 👍', 5:'ممتاز! 🤩' };
+var selectedStars = 0;
+var picker = document.getElementById('starPicker');
+var starLabel = document.getElementById('starLabel');
+
+picker.querySelectorAll('button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    selectedStars = parseInt(btn.dataset.star, 10);
+    picker.querySelectorAll('button').forEach(function(b){
+      b.classList.toggle('active', parseInt(b.dataset.star, 10) <= selectedStars);
+    });
+    starLabel.textContent = STAR_LABELS[selectedStars] || '';
+  });
+});
+
+document.getElementById('rateForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var status = document.getElementById('status');
+  var submitBtn = document.getElementById('submitBtn');
+  var submitText = document.getElementById('submitText');
+  status.className = 'status';
+
+  var honeypot = this.querySelector('[name=website]').value;
+  var name = document.getElementById('rName').value.trim();
+  var comment = document.getElementById('rComment').value.trim();
+
+  if(honeypot) return;
+  if(!selectedStars){ status.textContent = 'اختار تقييم بالنجوم الأول'; status.className = 'status err'; return; }
+  if(!name){ status.textContent = 'اكتب اسمك الأول'; status.className = 'status err'; return; }
+
+  submitBtn.disabled = true;
+  submitText.textContent = 'بيترسل...';
+
+  fetch(SUPABASE_URL + '/rest/v1/rpc/submit_review', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+    },
+    body: JSON.stringify({ p_name: name, p_rating: selectedStars, p_comment: comment || null, p_visitor_id: getVisitorId() })
+  }).then(function(res){
+    if(!res.ok) throw new Error('failed');
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('thanks').style.display = 'block';
+  }).catch(function(){
+    status.textContent = 'حصل خطأ، جرّب تاني بعد شوية';
+    status.className = 'status err';
+    submitBtn.disabled = false;
+    submitText.textContent = 'إرسال التقييم';
+  });
+});
+</script>
+</body>
+</html>
