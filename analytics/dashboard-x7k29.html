@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://nokgvbmngcgkfjlcmvmd.supabase.co; base-uri 'none'; form-action 'none'">
 <title>لوحة إحصائيات طالب علم</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +18,11 @@
   <div class="gate-box">
     <div class="gate-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="4" height="10" rx="1"/><rect x="10" y="5" width="4" height="15" rx="1"/><rect x="16" y="13" width="4" height="7" rx="1"/></svg></div>
     <h1>لوحة الإحصائيات</h1>
-    <p>الصفحة دي خاصة — ادخل الباسورد للمتابعة</p>
-    <input type="password" id="pw" placeholder="●●●●●●●●" autocomplete="off">
+    <p>الصفحة دي خاصة — ادخل بحساب الأدمن</p>
+    <input type="email" id="email" placeholder="الإيميل" autocomplete="username" dir="ltr">
+    <input type="password" id="pw" placeholder="الباسورد" autocomplete="current-password" dir="ltr">
     <button id="pwBtn"><span id="pwBtnText">دخول</span></button>
-    <div class="gate-err" id="gateErr">باسورد غلط، جرّب تاني</div>
+    <div class="gate-err" id="gateErr">الإيميل أو الباسورد غلط، أو الحساب ده مش أدمن</div>
   </div>
 </div>
 

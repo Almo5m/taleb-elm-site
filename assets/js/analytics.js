@@ -25,23 +25,14 @@ var Analytics = (function(){
     if(!configured) return;
     if(eventType === 'page_view' && alreadyCountedToday()) return;
     try{
-      fetch(SUPABASE_URL + '/rest/v1/site_events', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-          'Prefer': 'return=minimal'
-        },
-        keepalive: true,
-        body: JSON.stringify({
-          visitor_id: getVisitorId(),
-          event_type: eventType,
-          page: location.pathname,
-          referrer: document.referrer || null,
-          user_agent: navigator.userAgent
-        })
-      }).catch(function(){});
+      Api.post('track', {
+        visitor_id: getVisitorId(),
+        event_type: eventType,
+        page: location.pathname,
+        referrer: document.referrer || null
+      }).then(function(res){ return res.ok ? res.json() : null; })
+        .then(function(d){ if(d && d.proof) Api.saveProof(d.proof); })
+        .catch(function(){});
     }catch(e){}
   }
 

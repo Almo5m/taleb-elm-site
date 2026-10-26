@@ -44,7 +44,7 @@ var Reviews = (function(){
         '<div class="who">' +
           '<span class="av"><svg viewBox="0 0 24 24" class="icon"><use href="#i-user"/></svg></span>' +
           '<div><b>' + safeName + '</b><small>' + timeAgo(r.created_at) + '</small></div>' +
-          (r.verified ? '<span class="verified-badge" title="اتأكدنا إنه حمّل التطبيق فعلاً"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check-seal"/></svg></span>' : '') +
+          (r.verified ? '<span class="verified-badge" title="ضغط على تحميل التطبيق قبل ما يقيّم"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check-seal"/></svg></span>' : '') +
         '</div>' +
       '</div>';
     }).join('');
@@ -119,15 +119,7 @@ var Reviews = (function(){
       submitBtn.disabled = true;
       submitText.textContent = 'بيترسل...';
 
-      fetch(SUPABASE_URL + '/rest/v1/rpc/submit_review', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
-        },
-        body: JSON.stringify({ p_name: name, p_rating: selectedStars, p_comment: comment || null, p_visitor_id: getVisitorId() })
-      }).then(function(res){
+      Api.post('review', { name: name, rating: selectedStars, comment: comment || null, visitor_id: getVisitorId(), proof: Api.getProof(), website: honeypot }).then(function(res){
         if(!res.ok) throw new Error('failed');
         status.textContent = 'شكرًا! تقييمك هيظهر بعد مراجعة بسيطة.';
         status.className = 'review-form-status ok';

@@ -1,0 +1,7 @@
+# الموقع بيستخدم مفتاح Supabase "publishable" مش JWT، فلازم التحقق من الـ JWT يتقفل
+# على الدالتين دول. الحماية الفعلية جوه الدالتين نفسهم (Origin + حد أقصى للطلبات).
+[functions.track]
+verify_jwt = false
+
+[functions.review]
+verify_jwt = false

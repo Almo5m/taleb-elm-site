@@ -2,11 +2,42 @@
 const SUPABASE_URL = "https://nokgvbmngcgkfjlcmvmd.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_r96Xijbc6491_olkX2Gaqw_49BAVA48";
 
-/* الباسورد بيتخزّن في localStorage عشان يفضل شغال حتى لو قفلت المتصفح
-   بالكامل وفتحته تاني — من غير ما تدخله كل مرة. بيفضل محفوظ لحد ما تدوس
-   "خروج" بنفسك. ده أمان معقول لصفحة شخصية زي دي، طالما الرابط والباسورد
-   في حد ذاتهم مش متسربين. */
-const SESSION_KEY = 'ti_dash_pw';
+/* تسجيل الدخول بحساب Supabase Auth حقيقي (إيميل + باسورد). الجلسة بتتخزّن في
+   sessionStorage بس — بتتمسح لما تقفل التاب، ومفيش أي باسورد بيتخزّن في المتصفح. */
+const SESSION_KEY = 'ti_dash_session';
+
+function getSession(){ try{ return JSON.parse(sessionStorage.getItem(SESSION_KEY)); }catch(e){ return null; } }
+function setSession(s){
+  try{ if(s) sessionStorage.setItem(SESSION_KEY, JSON.stringify(s)); else sessionStorage.removeItem(SESSION_KEY); }catch(e){}
+}
+
+async function authRequest(path, body){
+  var res = await fetch(SUPABASE_URL + '/auth/v1/' + path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY },
+    body: JSON.stringify(body)
+  });
+  if(!res.ok) throw new Error('auth');
+  return res.json();
+}
+function toSession(r){ return { access: r.access_token, refresh: r.refresh_token, exp: Date.now() + (r.expires_in - 30) * 1000 }; }
+
+async function signIn(email, password){
+  var s = toSession(await authRequest('token?grant_type=password', { email: email, password: password }));
+  setSession(s);
+  return s;
+}
+
+/* بيرجّع توكن شغّال، وبيجدّده تلقائي لو قرّب يخلص */
+async function freshToken(){
+  var s = getSession();
+  if(!s) throw new Error('unauthorized');
+  if(Date.now() >= s.exp){
+    try{ s = toSession(await authRequest('token?grant_type=refresh_token', { refresh_token: s.refresh })); setSession(s); }
+    catch(e){ setSession(null); throw new Error('unauthorized'); }
+  }
+  return s.access;
+}
 
 var lastDaily = [];
 
@@ -14,12 +45,13 @@ function fmt(n){ return (n||0).toLocaleString('ar-EG'); }
 function pct(n,d){ return d ? Math.round((n/d)*100) : 0; }
 
 async function callRpc(fn, body){
+  var token = await freshToken();
   var res = await fetch(SUPABASE_URL + '/rest/v1/rpc/' + fn, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'apikey': SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+      'Authorization': 'Bearer ' + token
     },
     body: JSON.stringify(body)
   });
@@ -147,13 +179,13 @@ function renderDailyTable(daily){
   }).join('');
 }
 
-async function loadStats(password, days){
+async function loadStats(days){
   var refreshBtn = document.getElementById('refreshBtn');
   refreshBtn.classList.add('spin');
   document.getElementById('errBanner').style.display = 'none';
   try{
-    var stats = (await callRpc('get_site_stats', { p_password: password }))[0];
-    var daily = await callRpc('get_site_stats_daily', { p_password: password, p_days: days });
+    var stats = (await callRpc('get_site_stats', {}))[0];
+    var daily = await callRpc('get_site_stats_daily', { p_days: days });
     lastDaily = daily;
 
     document.getElementById('c-visitors').textContent = fmt(stats.unique_visitors);
@@ -178,19 +210,19 @@ async function loadStats(password, days){
   }catch(e){
     document.getElementById('loadingScreen').style.display = 'none';
     var banner = document.getElementById('errBanner');
-    banner.textContent = 'حصل خطأ في جلب البيانات — تأكد إنك شغّلت ملف الـ SQL في Supabase وإن الباسورد صح.';
+    banner.textContent = 'حصل خطأ في جلب البيانات — تأكد إنك شغّلت analytics/supabase-setup-auth.sql في Supabase وإن حسابك متضاف كأدمن.';
     banner.style.display = 'block';
     document.getElementById('content').style.display = 'block';
   }
   refreshBtn.classList.remove('spin');
 }
 
-function showDash(password){
+function showDash(){
   document.getElementById('gate').style.display = 'none';
   document.getElementById('dash').style.display = 'block';
   var activeRange = document.querySelector('.range-tabs button.active');
-  loadStats(password, parseInt(activeRange.dataset.range, 10));
-  loadReviews(password);
+  loadStats(parseInt(activeRange.dataset.range, 10));
+  loadReviews();
 }
 
 /* =====================================================================
@@ -236,11 +268,11 @@ function reviewRowHtml(r, pending){
   '</div>';
 }
 
-async function loadReviews(password){
+async function loadReviews(){
   var loading = document.getElementById('reviewsLoading');
   var content = document.getElementById('reviewsContent');
   try{
-    var reviews = await callRpc('admin_list_reviews', { p_password: password });
+    var reviews = await callRpc('admin_list_reviews', {});
     var pending = reviews.filter(function(r){ return !r.approved; });
     var published = reviews.filter(function(r){ return r.approved; });
 
@@ -271,7 +303,7 @@ async function loadReviews(password){
     loading.style.display = 'none';
     content.style.display = 'block';
   }catch(e){
-    loading.innerHTML = '<span>حصل خطأ في جلب التقييمات — تأكد إنك شغّلت ملف supabase-setup-reviews.sql</span>';
+    loading.innerHTML = '<span>حصل خطأ في جلب التقييمات — تأكد إنك شغّلت analytics/supabase-setup-auth.sql</span>';
   }
 }
 
@@ -281,15 +313,14 @@ document.body.addEventListener('click', async function(e){
   var row = btn.closest('.review-row');
   var id = row.dataset.id;
   var action = btn.dataset.action;
-  var password = localStorage.getItem(SESSION_KEY);
-  if(!password) return;
+  if(!getSession()) return;
 
   if(action === 'delete' && !confirm('متأكد إنك عايز تحذف التقييم ده؟')) return;
 
   btn.disabled = true;
   try{
-    await callRpc('admin_review_action', { p_password: password, p_id: parseInt(id, 10), p_action: action });
-    loadReviews(password);
+    await callRpc('admin_review_action', { p_id: parseInt(id, 10), p_action: action });
+    loadReviews();
   }catch(e){
     btn.disabled = false;
     alert('حصل خطأ، جرّب تاني');
@@ -308,39 +339,47 @@ document.querySelectorAll('.view-tabs button').forEach(function(btn){
 });
 
 /* دخول */
-document.getElementById('pwBtn').addEventListener('click', async function(){
+async function doLogin(){
+  var email = document.getElementById('email').value.trim();
   var pw = document.getElementById('pw').value;
-  if(!pw) return;
+  if(!email || !pw) return;
   var btn = document.getElementById('pwBtn');
   var btnText = document.getElementById('pwBtnText');
   btn.disabled = true; btnText.textContent = 'بيتحقق...';
   document.getElementById('gateErr').style.display = 'none';
   try{
-    await callRpc('get_site_stats', { p_password: pw });
-    try{ localStorage.setItem(SESSION_KEY, pw); }catch(e){}
-    showDash(pw);
+    await signIn(email, pw);
+    await callRpc('get_site_stats', {}); /* بيفشل لو الحساب مش أدمن */
+    showDash();
   }catch(e){
+    setSession(null);
     document.getElementById('gateErr').style.display = 'block';
   }
+  document.getElementById('pw').value = '';
   btn.disabled = false; btnText.textContent = 'دخول';
-});
-document.getElementById('pw').addEventListener('keydown', function(e){
-  if(e.key === 'Enter') document.getElementById('pwBtn').click();
+}
+document.getElementById('pwBtn').addEventListener('click', doLogin);
+['email', 'pw'].forEach(function(id){
+  document.getElementById(id).addEventListener('keydown', function(e){ if(e.key === 'Enter') doLogin(); });
 });
 
-/* خروج */
+/* خروج: بيقفل الجلسة في Supabase كمان، مش بس في المتصفح */
 document.getElementById('logoutBtn').addEventListener('click', function(){
-  try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
-  location.reload();
+  var s = getSession();
+  setSession(null);
+  if(!s){ location.reload(); return; }
+  fetch(SUPABASE_URL + '/auth/v1/logout', {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + s.access }
+  }).catch(function(){}).finally(function(){ location.reload(); });
 });
 
 /* تحديث */
 document.getElementById('refreshBtn').addEventListener('click', function(){
-  var pw = localStorage.getItem(SESSION_KEY);
-  if(!pw) return;
+  if(!getSession()) return;
   var activeRange = document.querySelector('.range-tabs button.active');
-  loadStats(pw, parseInt(activeRange.dataset.range, 10));
-  loadReviews(pw);
+  loadStats(parseInt(activeRange.dataset.range, 10));
+  loadReviews();
 });
 
 /* تبديل المدى الزمني */
@@ -348,16 +387,12 @@ document.querySelectorAll('.range-tabs button').forEach(function(btn){
   btn.addEventListener('click', function(){
     document.querySelectorAll('.range-tabs button').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
-    var pw = localStorage.getItem(SESSION_KEY);
-    if(pw) loadStats(pw, parseInt(btn.dataset.range, 10));
+    if(getSession()) loadStats(parseInt(btn.dataset.range, 10));
   });
 });
 
-/* لو الباسورد متخزّن في الجلسة، ادخل على طول من غير ما يتطلب تاني */
-(function(){
-  var saved = null;
-  try{ saved = localStorage.getItem(SESSION_KEY); }catch(e){}
-  if(saved){
-    showDash(saved);
-  }
-})();
+/* نضّف أي باسورد قديم كان متخزّن في المتصفح من النسخة السابقة */
+try{ localStorage.removeItem('ti_dash_pw'); }catch(e){}
+
+/* لو فيه جلسة شغّالة في التاب ده، ادخل على طول */
+if(getSession()) showDash();

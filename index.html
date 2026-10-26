@@ -19,7 +19,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="assets/js/theme.js"></script>
 <link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/story.css">
 </head>
 <body>
 
@@ -78,43 +81,46 @@
       <a href="#updates" data-nav>التحديثات</a>
       <a href="#support" data-nav>ادعم النشر</a>
     </nav>
-    <button class="btn btn-mint btn-sm" data-download><span>حمّل التطبيق</span></button>
+    <div class="top-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" class="icon i-sun"><use href="#i-sun"/></svg><svg viewBox="0 0 24 24" class="icon i-moon"><use href="#i-moon"/></svg></button>
+      <button class="btn btn-mint btn-sm" data-download><span>حمّل التطبيق</span></button>
+    </div>
   </div>
 </div>
 
 <!-- ============ HERO ============ -->
-<section id="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-copy" data-reveal>
-      <span class="eyebrow"><i></i>لطلاب الثانوية العامة والبكالوريا المصرية</span>
-      <h1>رتّب <mark>مذاكرتك</mark> في مكان واحد</h1>
-      <p class="desc">طالب علم بيحط كل موادك وجدولك ومواعيدك قدامك، منظمين بنظام صفك وشعبتك — من غير ما تفتح عشر تطبيقات مختلفة.</p>
-      <div class="hero-cta">
-        <button class="btn btn-mint" data-download><span><svg viewBox="0 0 24 24" class="icon" style="width:16px;height:16px"><use href="#i-download"/></svg> حمّل التطبيق الآن</span></button>
-        <a href="#try-now" class="btn btn-ghost">جرّب من غير تحميل</a>
+<section id="hero" class="story">
+  <div class="story-sticky">
+    <div class="wrap story-grid">
+      <div class="hero-copy story-copy">
+        <span class="eyebrow"><i></i>لطلاب الثانوية العامة والبكالوريا المصرية</span>
+        <h1 class="story-heads"><span class="head-a">مذاكرتك مبعثرة في 10 حتت؟</span><span class="head-b">كله اتجمّع في مكان واحد</span></h1>
+        <p class="desc">ملزمة هنا، ميعاد هناك، واجب على واتساب. طالب علم بيرتّبهم كلهم على مقاس صفك وشعبتك — انزل الصفحة وشوف بيحصل إيه.</p>
+        <div class="hero-cta">
+          <button class="btn btn-mint" data-download><span><svg viewBox="0 0 24 24" class="icon" style="width:16px;height:16px"><use href="#i-download"/></svg> حمّل التطبيق مجانًا</span></button>
+          <a href="#try-now" class="btn btn-ghost">جرّب من غير تحميل</a>
+        </div>
+        <p class="dev-note" hidden><span>التطبيق للأندرويد. افتح الصفحة من موبايلك، أو انسخ الرابط وابعته لنفسك.</span><button type="button">انسخ الرابط</button></p>
+        <div class="trust-row">
+          <span class="trust-item"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> مجاني بالكامل</span>
+          <span class="trust-item"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> مذاكرتك محفوظة على جهازك</span>
+          <span class="trust-item"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> مبني للثانوي والبكالوريا بس</span>
+        </div>
       </div>
-      <div class="trust-row">
-        <span class="trust-item"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> مجاني بالكامل</span>
-        <span class="trust-item"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> مذاكرتك محفوظة على جهازك</span>
-        <span class="trust-item"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> مبني للثانوي والبكالوريا بس</span>
+      <div class="board" aria-hidden="true">
+        <div class="chip" style="--dx:-120;--dy:-90;--r:-8"><svg class="icon" viewBox="0 0 24 24"><use href="#i-flask"/></svg>ملزمة الكيمياء<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
+        <div class="chip" style="--dx:140;--dy:-60;--r:6"><svg class="icon" viewBox="0 0 24 24"><use href="#i-calendar"/></svg>جدول الأسبوع<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
+        <div class="chip" style="--dx:-90;--dy:40;--r:5"><svg class="icon" viewBox="0 0 24 24"><use href="#i-chat"/></svg>قروب الفيزياء<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
+        <div class="chip" style="--dx:110;--dy:110;--r:-7"><svg class="icon" viewBox="0 0 24 24"><use href="#i-globe"/></svg>واجب الإنجليزي<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
+        <div class="chip" style="--dx:-60;--dy:150;--r:9"><svg class="icon" viewBox="0 0 24 24"><use href="#i-timer"/></svg>مؤقت المذاكرة<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
+        <div class="chip" style="--dx:90;--dy:-120;--r:-5"><svg class="icon" viewBox="0 0 24 24"><use href="#i-bell"/></svg>ميعاد الامتحان<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
+        
       </div>
     </div>
-    <div class="hero-visual" data-reveal="scale">
-      <div class="phone"><div class="screen"><img src="assets/screenshots/today.jpg" alt="شاشة اليوم في طالب علم" loading="lazy"></div></div>
-      <div class="hero-float f1">
-        <span class="badge-ic" style="background:var(--amber-pale);color:var(--amber)"><svg viewBox="0 0 24 24" class="icon" style="width:16px;height:16px"><use href="#i-trophy"/></svg></span>
-        إنجاز جديد!
-      </div>
-      <div class="hero-float f2">
-        <span class="badge-ic" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon" style="width:16px;height:16px"><use href="#i-check"/></svg></span>
-        مهمة اتعملت
-      </div>
-    </div>
+    <p class="scroll-hint">انزل وشوف</p>
   </div>
 </section>
 
-<!-- ============ SUBJECTS ============ -->
-<!-- ============ WHO ============ -->
 <section id="who">
   <div class="wrap" data-reveal>
     <p class="eyebrow"><i></i>مش تطبيق عام</p>
@@ -136,7 +142,6 @@
   </div>
 </section>
 
-<!-- ============ TRY IT NOW (LIVE DEMO) ============ -->
 <section id="try-now">
   <div class="wrap">
     <div style="text-align:center;margin-bottom:36px" data-reveal>
@@ -201,7 +206,6 @@
   </div>
 </section>
 
-<!-- ============ GALLERY ============ -->
 <section id="gallery">
   <div class="wrap">
     <div style="text-align:center;margin-bottom:10px" data-reveal>
@@ -237,7 +241,6 @@
   </div>
 </section>
 
-<!-- ============ BO AI ASSISTANT ============ -->
 <section id="bo-assistant">
   <div class="wrap">
     <div class="bo-card card" data-reveal>
@@ -258,7 +261,6 @@
   </div>
 </section>
 
-<!-- ============ FEATURES ============ -->
 <section id="features">
   <div class="wrap">
 
@@ -327,7 +329,6 @@
   </div>
 </section>
 
-<!-- ============ RELIGIOUS ============ -->
 <section id="religious">
   <div class="wrap">
     <div class="rel-wrap rel-inner" data-reveal>
@@ -355,8 +356,6 @@
   </div>
 </section>
 
-<!-- ============ DATA CLARITY ============ -->
-<!-- ============ FORUM ============ -->
 <section id="forum">
   <div class="wrap">
     <div class="forum-card card" data-reveal>
@@ -370,28 +369,6 @@
   </div>
 </section>
 
-<!-- ============ UPDATES / CHANGELOG ============ -->
-<section id="updates">
-  <div class="wrap">
-    <div class="updates-head" data-reveal>
-      <span class="eyebrow"><i></i>بيتطوّر باستمرار</span>
-      <h2 class="section-title">آخر التحديثات</h2>
-      <p class="section-sub" style="margin-top:10px">بنضيف ونحسّن في طالب علم بشكل مستمر — دي آخر الإضافات.</p>
-    </div>
-    <div class="updates-list" id="updatesList" data-reveal></div>
-  </div>
-</section>
-
-<!-- ============ FOUNDER ============ -->
-<section id="founder">
-  <div class="wrap founder-card card" data-reveal="scale">
-    <span class="quote-mark">"</span>
-    <p>أنا معاذ، صممت طالب علم وأنا لسه طالب زيك. عارف قد إيه صعب إنك تنظم وقتك في السنين دي — عشان كده بنيت التطبيق ده، ولسه بطوّره باستمرار.</p>
-    <span class="who">Al-Mo</span>
-  </div>
-</section>
-
-<!-- ============ DATA CLARITY ============ -->
 <section id="clarity">
   <div class="wrap">
     <div class="clarity-card card" data-reveal>
@@ -421,7 +398,6 @@
   </div>
 </section>
 
-<!-- ============ REVIEWS ============ -->
 <section id="reviews">
   <div class="wrap">
     <div class="reviews-head">
@@ -472,7 +448,68 @@
   </div>
 </section>
 
-<!-- ============ SUPPORT ============ -->
+<section id="founder">
+  <div class="wrap founder-card card" data-reveal="scale">
+    <span class="quote-mark">"</span>
+    <p>أنا معاذ، صممت طالب علم وأنا لسه طالب زيك. عارف قد إيه صعب إنك تنظم وقتك في السنين دي — عشان كده بنيت التطبيق ده، ولسه بطوّره باستمرار.</p>
+    <span class="who">Al-Mo</span>
+  </div>
+</section>
+
+<section id="cta-final">
+  <div class="wrap">
+    <div class="cta-box" data-reveal>
+      <div class="inner">
+        <h2>جاهز ترتب مذاكرتك؟</h2>
+        <p>حمّل طالب علم دلوقتي وابدأ خطوتك الأولى نحو مذاكرة منظمة.</p>
+        <button class="btn btn-mint" data-download><span><svg viewBox="0 0 24 24" class="icon" style="width:16px;height:16px"><use href="#i-download"/></svg> حمّل النسخة الأولى من التطبيق (APK)</span></button>
+        <div><span class="beta-note"><svg viewBox="0 0 24 24" class="icon" style="width:15px;height:15px"><use href="#i-bolt"/></svg> قريبًا على Google Play</span></div>
+        <p class="warn-hint">التثبيت 3 خطوات بس — هنوريهالك قبل ما التحميل يبدأ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="install-notice">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:28px" data-reveal>
+      <span class="eyebrow"><i></i>سؤال بيتكرر كتير</span>
+      <h2 class="section-title" style="max-width:680px;margin:0 auto">ظهرلك تحذير وقت التثبيت؟ التطبيق سليم 100%</h2>
+    </div>
+
+    <div class="notice-card card" data-reveal>
+      <div class="notice-head">
+        <div class="notice-shot"><img src="assets/play-protect-warning.webp" alt="رسالة تم حظر التطبيق لحماية جهازك من Play للحماية" loading="lazy"></div>
+        <div>
+          <h3>ليه بتشوف رسالة "تم حظر التطبيق لحماية جهازك"؟</h3>
+          <p>لما تفتح ملف الـ APK، أندرويد بيوريك الرسالة اللي شايفها في الصورة، من خدمة "Play للحماية"، بتقول إنه "لم يسبق لخدمة Play للحماية العثور على تطبيق من هذا المطوّر — قد لا يكون هذا آمنًا". دي مش رسالة إن فيه فيروس أو هكر — دي رسالة تلقائية بتظهر مع <b>أي</b> تطبيق بيتحمّل كملف APK من بره متجر Google Play مباشرة، خصوصًا وهو لسه في مرحلة الاختبار قبل النشر الرسمي. تحصل مع تطبيقات كتير غيرنا في نفس المرحلة، ومفهاش أي خطورة.</p>
+        </div>
+      </div>
+
+      <div class="notice-steps">
+        <div class="notice-step">
+          <span class="num">1</span>
+          <div><b>دوس على "مزيد من التفاصيل"</b><small>هتلاقيها تحت الرسالة، هتفتحلك تفاصيل زيادة عن التطبيق.</small></div>
+        </div>
+        <div class="notice-step">
+          <span class="num">2</span>
+          <div><b>دوس على "التثبيت على أي حال"</b><small>هيثبت التطبيق عادي على طول، ومش هتشوف الرسالة دي تاني بعد كده.</small></div>
+        </div>
+      </div>
+
+      <div class="notice-reassure">
+        <svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg>
+        <span>التطبيق فعلاً بيتصل بسيرفر — بس عشان تسجيل الدخول ومنتدى الطلاب، زي أي تطبيق فيه حسابات مستخدمين. باقي بياناتك زي مذاكرتك وجدولك وملاحظاتك محفوظة محليًا على جهازك زي ما ذكرنا في قسم "بياناتك فين بالظبط؟" فوق. تحذير "Play للحماية" مالوش علاقة بده أصلاً — بيظهر مع أي تطبيق بيتحمّل من بره المتجر بغض النظر عن طبيعته. الحل الدائم لاختفاء الرسالة دي خالص هو نشر التطبيق رسميًا على Google Play — وده اللي بنشتغل عليه دلوقتي.</span>
+      </div>
+
+      <div class="notice-cta">
+        <a href="#support" class="btn btn-mint btn-sm"><span>ساعدنا ننشره على Google Play</span></a>
+        <p>وبكده الرسالة دي متظهرش لأي حد تاني خالص.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="support">
   <div class="wrap">
     <div class="support-card card" data-reveal>
@@ -517,65 +554,14 @@
   </div>
 </section>
 
-<button class="support-fab" id="supportFab" type="button" aria-label="ادعم المشروع">
-  <svg viewBox="0 0 24 24" class="icon" style="fill:currentColor"><path d="M12 21s-7.5-4.6-10.2-9.3C.2 8.9 1.4 5.4 4.6 4.3c2-.7 4 0 5.4 1.7C11.4 4.3 13.4 3.6 15.4 4.3c3.2 1.1 4.4 4.6 2.8 7.4C15.5 16.4 12 21 12 21Z"/></svg>
-  ادعم المشروع
-</button>
-
-
-<!-- ============ FINAL CTA ============ -->
-<section id="cta-final">
+<section id="updates">
   <div class="wrap">
-    <div class="cta-box" data-reveal>
-      <div class="inner">
-        <h2>جاهز ترتب مذاكرتك؟</h2>
-        <p>حمّل طالب علم دلوقتي وابدأ خطوتك الأولى نحو مذاكرة منظمة.</p>
-        <button class="btn btn-mint" data-download><span><svg viewBox="0 0 24 24" class="icon" style="width:16px;height:16px"><use href="#i-download"/></svg> حمّل النسخة الأولى من التطبيق (APK)</span></button>
-        <div><span class="beta-note"><svg viewBox="0 0 24 24" class="icon" style="width:15px;height:15px"><use href="#i-bolt"/></svg> قريبًا على Google Play</span></div>
-        <p class="warn-hint">هيظهرلك تنويه قبل ما التحميل يبدأ — اقرأه، مفيش أي مشكلة في التطبيق.</p>
-      </div>
+    <div class="updates-head" data-reveal>
+      <span class="eyebrow"><i></i>بيتطوّر باستمرار</span>
+      <h2 class="section-title">آخر التحديثات</h2>
+      <p class="section-sub" style="margin-top:10px">بنضيف ونحسّن في طالب علم بشكل مستمر — دي آخر الإضافات.</p>
     </div>
-  </div>
-</section>
-
-<!-- ============ INSTALL NOTICE (page section) ============ -->
-<section id="install-notice">
-  <div class="wrap">
-    <div style="text-align:center;margin-bottom:28px" data-reveal>
-      <span class="eyebrow"><i></i>سؤال بيتكرر كتير</span>
-      <h2 class="section-title" style="max-width:680px;margin:0 auto">ظهرلك تحذير وقت التثبيت؟ التطبيق سليم 100%</h2>
-    </div>
-
-    <div class="notice-card card" data-reveal>
-      <div class="notice-head">
-        <div class="notice-shot"><img src="assets/play-protect-warning.webp" alt="رسالة تم حظر التطبيق لحماية جهازك من Play للحماية" loading="lazy"></div>
-        <div>
-          <h3>ليه بتشوف رسالة "تم حظر التطبيق لحماية جهازك"؟</h3>
-          <p>لما تفتح ملف الـ APK، أندرويد بيوريك الرسالة اللي شايفها في الصورة، من خدمة "Play للحماية"، بتقول إنه "لم يسبق لخدمة Play للحماية العثور على تطبيق من هذا المطوّر — قد لا يكون هذا آمنًا". دي مش رسالة إن فيه فيروس أو هكر — دي رسالة تلقائية بتظهر مع <b>أي</b> تطبيق بيتحمّل كملف APK من بره متجر Google Play مباشرة، خصوصًا وهو لسه في مرحلة الاختبار قبل النشر الرسمي. تحصل مع تطبيقات كتير غيرنا في نفس المرحلة، ومفهاش أي خطورة.</p>
-        </div>
-      </div>
-
-      <div class="notice-steps">
-        <div class="notice-step">
-          <span class="num">1</span>
-          <div><b>دوس على "مزيد من التفاصيل"</b><small>هتلاقيها تحت الرسالة، هتفتحلك تفاصيل زيادة عن التطبيق.</small></div>
-        </div>
-        <div class="notice-step">
-          <span class="num">2</span>
-          <div><b>دوس على "التثبيت على أي حال"</b><small>هيثبت التطبيق عادي على طول، ومش هتشوف الرسالة دي تاني بعد كده.</small></div>
-        </div>
-      </div>
-
-      <div class="notice-reassure">
-        <svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg>
-        <span>التطبيق فعلاً بيتصل بسيرفر — بس عشان تسجيل الدخول ومنتدى الطلاب، زي أي تطبيق فيه حسابات مستخدمين. باقي بياناتك زي مذاكرتك وجدولك وملاحظاتك محفوظة محليًا على جهازك زي ما ذكرنا في قسم "بياناتك فين بالظبط؟" فوق. تحذير "Play للحماية" مالوش علاقة بده أصلاً — بيظهر مع أي تطبيق بيتحمّل من بره المتجر بغض النظر عن طبيعته. الحل الدائم لاختفاء الرسالة دي خالص هو نشر التطبيق رسميًا على Google Play — وده اللي بنشتغل عليه دلوقتي.</span>
-      </div>
-
-      <div class="notice-cta">
-        <a href="#support" class="btn btn-mint btn-sm"><span>ساعدنا ننشره على Google Play</span></a>
-        <p>وبكده الرسالة دي متظهرش لأي حد تاني خالص.</p>
-      </div>
-    </div>
+    <div class="updates-list" id="updatesList" data-reveal></div>
   </div>
 </section>
 
@@ -585,19 +571,23 @@
   <div class="box">
     <button class="close-btn" data-modal-close aria-label="إغلاق"><svg viewBox="0 0 24 24" class="icon"><use href="#i-close"/></svg></button>
     <span class="m-eyebrow"><i></i> قبل ما تحمّل</span>
-    <h3 id="dl-modal-title">هتشوف تحذير من "Play للحماية" — التطبيق سليم</h3>
+    <h3 id="dl-modal-title">3 خطوات وتبقى جاهز</h3>
     <div class="m-shot"><img src="assets/play-protect-warning.webp" alt="رسالة تم حظر التطبيق لحماية جهازك" loading="lazy"></div>
-    <p class="m-desc">الرسالة دي تلقائية وبتظهر مع أي تطبيق بيتحمّل كملف APK من بره متجر Google Play، ومفهاش أي خطورة. لما تشوفها:</p>
+    <p class="m-desc">أندرويد بيعرض رسالة "Play للحماية" مع أي تطبيق بيتحمّل من بره المتجر، ومفيش فيها أي خطر. اتبع الخطوات دي وخلاص:</p>
     <div class="m-steps">
       <div class="m-step">
         <span class="num">1</span>
-        <div><b>دوس على "مزيد من التفاصيل"</b><small>تحت الرسالة مباشرة</small></div>
+        <div><b>حمّل الملف</b><small>دوس الزرار تحت والتحميل بيبدأ على طول</small></div>
       </div>
       <div class="m-step">
         <span class="num">2</span>
-        <div><b>دوس على "التثبيت على أي حال"</b><small>وهيثبت عادي على طول</small></div>
+        <div><b>لو ظهرت الرسالة، دوس "مزيد من التفاصيل"</b><small>تحت الرسالة مباشرة</small></div>
       </div>
-    </div>
+      <div class="m-step">
+        <span class="num">3</span>
+        <div><b>دوس "التثبيت على أي حال"</b><small>وهيتثبت عادي ومش هتشوفها تاني</small></div>
+      </div>
+      </div>
     <a id="dl-modal-go" href="#" class="btn btn-mint m-go"><span><svg viewBox="0 0 24 24" class="icon" style="width:16px;height:16px"><use href="#i-download"/></svg> فهمت، حمّل الملف الآن</span></a>
     <a href="#install-notice" class="m-skip" data-modal-close>عايز تفاصيل أكتر عن المشكلة؟</a>
   </div>
@@ -630,15 +620,18 @@
         <a href="mailto:moaz2009amen@gmail.com"><svg viewBox="0 0 24 24" class="icon"><use href="#i-mail"/></svg> إيميل</a>
       </div>
     </div>
+    <a class="foot-sign" href="https://www.facebook.com/share/1HvQMbwYYV/" target="_blank" rel="noopener noreferrer" aria-label="AL MO"><img class="logo-on-light" src="assets/brand/almo-logo-light.png" alt="AL MO" width="56" height="56" loading="lazy"><img class="logo-on-dark" src="assets/brand/almo-logo.png" alt="" width="56" height="56" loading="lazy"></a>
     <div class="foot-bottom">© 2026 طالب علم — صُنع بحب لطلاب مصر</div>
   </div>
 </footer>
 
 <script src="assets/js/config.js"></script>
+<script src="assets/js/api.js"></script>
 <script src="assets/js/analytics.js"></script>
 <script src="assets/js/updates.js"></script>
 <script src="assets/js/reviews.js"></script>
 <script src="assets/js/ui.js"></script>
 <script src="assets/js/demo.js"></script>
+<script src="assets/js/story.js"></script>
 </body>
 </html>

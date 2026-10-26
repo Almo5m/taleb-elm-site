@@ -12,6 +12,9 @@ const APK_URL = "https://github.com/Almo5m/taleb-elm-site/releases/download/v1.0
 const SUPABASE_URL = "https://nokgvbmngcgkfjlcmvmd.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_r96Xijbc6491_olkX2Gaqw_49BAVA48";
 
+/* الكتابة (أحداث وتقييمات) بتعدّي من دوال Supabase Edge مش من الجدول مباشرة */
+const FUNCTIONS_URL = SUPABASE_URL + "/functions/v1";
+
 /* =====================================================================
    معرّف عشوائي واحد للزائر، مخزّن في المتصفح ومشترك بين التتبع والتقييمات
    (عشان نقدر نتحقق إن اللي بيقيّم نفس اللي دوس تحميل من قبل).

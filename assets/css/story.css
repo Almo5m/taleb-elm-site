@@ -1,0 +1,90 @@
+/* =====================================================================
+   التصميم الجديد — "من الفوضى للترتيب" + الوضع الداكن.
+   بيتحمّل بعد main.css وبيعدّل عليه، فمفيش حاجة قديمة اتمسحت.
+   ===================================================================== */
+:root{ --font-d:'Readex Pro','Cairo',sans-serif; --panel:#16214A }
+:focus-visible{ outline:3px solid var(--mint); outline-offset:3px }
+
+/* ---------- الوضع الداكن ---------- */
+[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0D1220; --surface:#151C2F; --ink:#EEF1F8; --ink-soft:#A3ADC4; --line:#26304A;
+  --navy:#E6EBFF; --panel:#1B2A5C; --navy-pale:rgba(230,235,255,.1);
+  --mint-pale:rgba(23,185,120,.16); --coral-pale:rgba(244,91,105,.16);
+  --lavender-pale:rgba(139,127,232,.18); --teal-pale:rgba(47,191,159,.16); --amber-pale:rgba(245,165,36,.16);
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.6);
+  --shadow-lg:0 20px 45px -20px rgba(0,0,0,.7);
+}
+[data-theme="dark"] #topbar{ background:rgba(13,18,32,.88) }
+[data-theme="dark"] .btn-navy, [data-theme="dark"] .strip-main, [data-theme="dark"] .cta-box{ background:var(--panel) }
+[data-theme="dark"] .bo-card{ background:linear-gradient(155deg,var(--panel),#223470) }
+[data-theme="dark"] .support-card{ background:var(--surface) }
+[data-theme="dark"] .support-top .eyebrow{ background:var(--surface) }
+
+.top-actions{ display:flex; align-items:center; gap:10px }
+.theme-toggle{
+  width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); background:var(--surface);
+  color:var(--ink); display:grid; place-items:center; cursor:pointer; flex-shrink:0;
+}
+.theme-toggle .icon{ width:20px; height:20px; grid-area:1/1 }
+[data-theme="dark"] .theme-toggle .i-moon, :root:not([data-theme="dark"]) .theme-toggle .i-sun{ display:none }
+
+/* ---------- الهيرو: مبعثر ← مترتّب ---------- */
+#hero.story{ padding:0; height:250vh }
+.story-sticky{ position:sticky; top:var(--topbar-h,64px); height:calc(100svh - var(--topbar-h,64px)); min-height:520px; display:flex; align-items:center; overflow:hidden }
+.story-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center; width:100% }
+.story-copy{ position:relative; z-index:2 }
+.story-heads{ display:grid; text-wrap:balance }
+.story-heads span{ grid-area:1/1; display:block }
+.head-a{ opacity:clamp(0, calc(1 - var(--p,0) * 3), 1) }
+.head-b{ opacity:clamp(0, calc((var(--p,0) - .3) * 3), 1) }
+
+.board{ display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:20px }
+.chip{
+  display:flex; align-items:center; gap:10px; padding:14px 16px; border-radius:var(--r-sm);
+  background:var(--surface); box-shadow:var(--shadow);
+  border:1.5px solid color-mix(in srgb, var(--mint) calc(var(--p,0) * 100%), var(--line));
+  font-family:var(--font-d); font-weight:600; font-size:14px; will-change:transform;
+  transform:translate(calc(var(--dx) * var(--k,1) * (1 - var(--p,0)) * 1px), calc(var(--dy) * var(--k,1) * (1 - var(--p,0)) * 1px)) rotate(calc(var(--r) * (1 - var(--p,0)) * 1deg));
+}
+.chip .icon{ width:20px; height:20px; color:var(--mint-dark); flex-shrink:0 }
+.chip .ok{ margin-inline-start:auto; color:var(--mint); opacity:clamp(0, calc((var(--p,0) - .8) * 5), 1) }
+.scroll-hint{ position:absolute; bottom:16px; inset-inline:0; text-align:center; font-size:12.5px; color:var(--ink-soft); opacity:clamp(0, calc(1 - var(--p,0) * 6), 1) }
+.dev-note{ margin-top:18px; padding:14px 16px; border-radius:var(--r-sm); background:var(--amber-pale); font-size:13.5px; display:flex; gap:12px; align-items:center; flex-wrap:wrap }
+.dev-note[hidden]{ display:none }
+.dev-note button{ border:0; background:var(--ink); color:var(--surface); padding:10px 16px; min-height:44px; border-radius:99px; font-family:var(--font-d); font-weight:700; cursor:pointer }
+
+@media (max-width:900px){
+  #hero.story{ height:220vh }
+  .story-grid{ grid-template-columns:1fr; gap:10px; text-align:center }
+  .story-copy .desc, .story-copy .trust-row{ display:none }
+  .story-copy .hero-cta{ margin-top:18px }
+  .board{ padding:8px 4px; margin-top:44px; gap:10px; --k:.45 }
+  .chip{ padding:10px 12px; font-size:12.5px; gap:8px }
+  .dev-note{ font-size:12.5px; padding:10px 12px }
+  .scroll-hint{ display:none }
+}
+@media (prefers-reduced-motion:reduce){
+  #hero.story{ height:auto }
+  .story-sticky{ position:static; height:auto; padding:48px 0 }
+  .head-a{ display:none }
+  .scroll-hint{ display:none }
+}
+
+/* بدل رسالة "مفيش تقييمات" (دليل عكسي)، القسم بيفضل فيه دعوة المشاركة بس */
+#reviewsEmpty{ display:none !important }
+
+/* توقيع AL-MO من غير خلفية: نسخة بالكحلي للوضع الفاتح، والأصلية (بيضا) للداكن */
+.foot-sign{ display:flex; width:max-content; margin:26px auto 0; padding:6px }
+.foot-sign img{ height:56px; width:auto }
+.foot-sign .logo-on-dark, [data-theme="dark"] .foot-sign .logo-on-light{ display:none }
+[data-theme="dark"] .foot-sign .logo-on-dark{ display:block }
+
+/* كروت الدفع كانت بخلفية بيضا شفافة؛ في الداكن بتبقى سطح غامق بحدود هادية */
+[data-theme="dark"] .pay-card{ background:rgba(255,255,255,.05); border-color:var(--line) }
+
+@media (min-width:901px){
+  .board{ gap:20px; padding:28px }
+  .chip{ padding:20px 22px; font-size:16px; gap:12px }
+  .chip .icon{ width:24px; height:24px }
+}

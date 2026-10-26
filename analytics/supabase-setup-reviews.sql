@@ -3,10 +3,7 @@
 -- شغّل الملف ده مرة واحدة في Supabase Dashboard → SQL Editor → Run
 -- ده ملف إضافي منفصل عن analytics/supabase-setup.sql وميأثرش عليه ولا
 -- على جدول site_events أو بياناته خالص.
---
--- مهم: حط في السطرين اللي فيهم 'غيّر_الباسورد_ده_CHANGE_ME' هنا تحت
--- نفس الباسورد اللي حطيته في supabase-setup.sql بالظبط، عشان تقدر
--- توافق على التقييمات من نفس لوحة الإحصائيات الخاصة بنفس الباسورد.
+
 -- =====================================================================
 
 -- 1) جدول التقييمات
@@ -57,42 +54,4 @@ create policy "anyone can read approved reviews"
   to anon
   using (approved = true);
 
--- 4) دوال إدارة التقييمات (محمية بنفس نظام الباسورد بتاع الإحصائيات)
-create or replace function admin_list_reviews(p_password text)
-returns setof site_reviews
-language plpgsql
-security definer
-set search_path = public
-as $$
-begin
-  if p_password is distinct from 'غيّر_الباسورد_ده_CHANGE_ME' then
-    raise exception 'unauthorized';
-  end if;
-
-  return query select * from site_reviews order by created_at desc;
-end;
-$$;
-
-create or replace function admin_review_action(p_password text, p_id bigint, p_action text)
-returns void
-language plpgsql
-security definer
-set search_path = public
-as $$
-begin
-  if p_password is distinct from 'غيّر_الباسورد_ده_CHANGE_ME' then
-    raise exception 'unauthorized';
-  end if;
-
-  if p_action = 'approve' then
-    update site_reviews set approved = true where id = p_id;
-  elsif p_action = 'delete' then
-    delete from site_reviews where id = p_id;
-  else
-    raise exception 'invalid action';
-  end if;
-end;
-$$;
-
-grant execute on function admin_list_reviews(text) to anon;
-grant execute on function admin_review_action(text, bigint, text) to anon;
+-- (دوال إدارة التقييمات بقت في supabase-setup-auth.sql — محمية بتسجيل دخول Supabase Auth)
