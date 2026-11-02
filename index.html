@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="assets/css/story.css">
 </head>
 <body>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
 <svg style="position:absolute;width:0;height:0" aria-hidden="true">
   <defs>
@@ -72,14 +73,12 @@
       <span class="mark"><img src="assets/app-icon.png" alt="طالب علم"></span>
       طالب علم
     </div>
-    <nav class="topnav" id="topnav">
-      <a href="#try-now" data-nav>جرّب دلوقتي</a>
-      <a href="#bo-assistant" data-nav>بو</a>
-      <a href="#features" data-nav>مميزات</a>
-      <a href="#gallery" data-nav>لقطات</a>
-      <a href="#forum" data-nav>المنتدى</a>
-      <a href="#updates" data-nav>التحديثات</a>
-      <a href="#support" data-nav>ادعم النشر</a>
+    <nav class="topnav" id="topnav" aria-label="فصول الصفحة">
+      <a href="#hero" data-ch="1"><b>01</b>المشكلة</a>
+      <a href="#ch-2" data-ch="2"><b>02</b>جرّبه</a>
+      <a href="#ch-3" data-ch="3"><b>03</b>المميزات</a>
+      <a href="#ch-4" data-ch="4"><b>04</b>الثقة</a>
+      <a href="#ch-5" data-ch="5"><b>05</b>حمّل</a>
     </nav>
     <div class="top-actions">
       <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" class="icon i-sun"><use href="#i-sun"/></svg><svg viewBox="0 0 24 24" class="icon i-moon"><use href="#i-moon"/></svg></button>
@@ -141,6 +140,8 @@
     <p class="section-sub" style="margin:16px auto 0" data-reveal>دي مجرد أمثلة، مش القايمة كلها — التطبيق بيضيفلك موادك أول ما تحدد نظامك وصفك وشعبتك أو مسارك.</p>
   </div>
 </section>
+
+<div class="chapter" id="ch-2"><span class="ch-num">02</span><h2 class="ch-title">جرّبه بنفسك</h2><p class="ch-sub">من غير ما تحمّل حاجة</p></div>
 
 <section id="try-now">
   <div class="wrap">
@@ -261,6 +262,8 @@
   </div>
 </section>
 
+<div class="chapter" id="ch-3"><span class="ch-num">03</span><h2 class="ch-title">كل حاجة مترتبة</h2><p class="ch-sub">مواد ووقت ودعم ومنتدى على مقاس صفك</p></div>
+
 <section id="features">
   <div class="wrap">
 
@@ -369,6 +372,8 @@
   </div>
 </section>
 
+<div class="chapter" id="ch-4"><span class="ch-num">04</span><h2 class="ch-title">ثقة</h2><p class="ch-sub">بياناتك فين، وإيه رأي الطلاب</p></div>
+
 <section id="clarity">
   <div class="wrap">
     <div class="clarity-card card" data-reveal>
@@ -456,6 +461,8 @@
   </div>
 </section>
 
+<div class="chapter" id="ch-5"><span class="ch-num">05</span><h2 class="ch-title">ابدأ</h2><p class="ch-sub">3 خطوات وتبقى جاهز</p></div>
+
 <section id="cta-final">
   <div class="wrap">
     <div class="cta-box" data-reveal>
@@ -499,7 +506,7 @@
 
       <div class="notice-reassure">
         <svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg>
-        <span>التطبيق فعلاً بيتصل بسيرفر — بس عشان تسجيل الدخول ومنتدى الطلاب، زي أي تطبيق فيه حسابات مستخدمين. باقي بياناتك زي مذاكرتك وجدولك وملاحظاتك محفوظة محليًا على جهازك زي ما ذكرنا في قسم "بياناتك فين بالظبط؟" فوق. تحذير "Play للحماية" مالوش علاقة بده أصلاً — بيظهر مع أي تطبيق بيتحمّل من بره المتجر بغض النظر عن طبيعته. الحل الدائم لاختفاء الرسالة دي خالص هو نشر التطبيق رسميًا على Google Play — وده اللي بنشتغل عليه دلوقتي.</span>
+        <span>الرسالة دي ملهاش علاقة ببياناتك. مذاكرتك على جهازك، والتفاصيل في <a href="#ch-4">فصل الثقة</a>.</span>
       </div>
 
       <div class="notice-cta">
@@ -620,10 +627,15 @@
         <a href="mailto:moaz2009amen@gmail.com"><svg viewBox="0 0 24 24" class="icon"><use href="#i-mail"/></svg> إيميل</a>
       </div>
     </div>
+    <nav class="foot-legal" aria-label="صفحات قانونية"><a href="terms/">شروط الاستخدام</a><a href="privacy/">سياسة الخصوصية</a><a href="forum-terms/">شروط المنتدى</a><a href="site-privacy/">خصوصية الموقع</a></nav>
     <a class="foot-sign" href="https://www.facebook.com/share/1HvQMbwYYV/" target="_blank" rel="noopener noreferrer" aria-label="AL MO"><img class="logo-on-light" src="assets/brand/almo-logo-light.png" alt="AL MO" width="56" height="56" loading="lazy"><img class="logo-on-dark" src="assets/brand/almo-logo.png" alt="" width="56" height="56" loading="lazy"></a>
     <div class="foot-bottom">© 2026 طالب علم — صُنع بحب لطلاب مصر</div>
   </div>
 </footer>
+
+<div class="dl-bar" id="dlBar" inert>
+  <button class="btn btn-mint" data-download type="button"><span>حمّل التطبيق مجانًا</span></button>
+</div>
 
 <script src="assets/js/config.js"></script>
 <script src="assets/js/api.js"></script>

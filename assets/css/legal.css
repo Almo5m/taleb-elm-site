@@ -1,0 +1,84 @@
+/* صفحات القانون — هوية طالب علم (فاتح/داكن). فكرة العالم: كراسة المذاكرة، كل بند ورقة بخط الهامش. */
+:root{
+  --paper:#F6F7FA; --surface:#FFFFFF; --ink:#131A2A; --ink-soft:#5B6479; --line:#E7EAF1;
+  --mint:#17B978; --mint-dark:#0B7F4F; --mint-pale:#E7F8F0; --navy:#16214A; --bar-h:64px;
+  --font-d:'Readex Pro','Cairo',sans-serif; --font-b:'IBM Plex Sans Arabic',sans-serif;
+  --shadow:0 1px 2px rgba(19,26,42,.05), 0 10px 26px -16px rgba(19,26,42,.18);
+}
+[data-theme="dark"]{
+  color-scheme:dark; --paper:#0D1220; --surface:#151C2F; --ink:#EEF1F8; --ink-soft:#A3ADC4; --line:#26304A;
+  --mint-dark:#3DDC97; --mint-pale:rgba(23,185,120,.16); --navy:#E6EBFF;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.6);
+}
+*{ box-sizing:border-box }
+html{ scroll-behavior:smooth; scroll-padding-top:calc(var(--bar-h) + 70px) }
+:focus-visible{ outline:3px solid var(--mint); outline-offset:3px }
+body{ margin:0; background:var(--paper); color:var(--ink); font-family:var(--font-b); font-size:16px; line-height:1.95 }
+a{ color:var(--mint-dark) }
+
+.progress{ position:fixed; top:0; inset-inline:0; height:3px; z-index:60; background:var(--mint); transform:scaleX(0); transform-origin:right center; pointer-events:none }
+.bar{
+  position:sticky; top:0; z-index:50; display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; padding:10px 20px;
+  background:color-mix(in srgb, var(--paper) 96%, transparent); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); border-bottom:1px solid var(--line);
+}
+.brand{ display:flex; align-items:center; gap:10px; margin-inline-end:auto; font-family:var(--font-d); font-weight:700; color:var(--navy); text-decoration:none }
+.brand img{ border-radius:10px }
+.theme-toggle{ width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); background:var(--surface); color:var(--ink); display:grid; place-items:center; cursor:pointer }
+.theme-toggle svg{ width:20px; height:20px; grid-area:1/1; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round }
+[data-theme="dark"] .theme-toggle .i-moon, :root:not([data-theme="dark"]) .theme-toggle .i-sun{ display:none }
+.legal-tabs{ display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; width:100%; order:3 }
+.legal-tabs::-webkit-scrollbar{ display:none }
+.legal-tabs a{ flex-shrink:0; min-height:44px; display:flex; align-items:center; padding:0 16px; border-radius:99px; font-family:var(--font-d); font-weight:600; font-size:13.5px; color:var(--ink-soft); text-decoration:none; border:1.5px solid transparent }
+.legal-tabs a[aria-current="page"]{ color:var(--mint-dark); border-color:var(--mint); background:var(--mint-pale) }
+@media (min-width:960px){ .legal-tabs{ width:auto; order:0 } }
+
+.wrap{ max-width:1040px; margin:0 auto; padding:0 20px 64px }
+.doc-head{ padding:48px 0 28px; text-align:center }
+.doc-icon{ width:64px; height:64px; margin:0 auto 18px; border-radius:20px; display:grid; place-items:center; background:var(--mint-pale); color:var(--mint-dark) }
+.doc-icon svg{ width:32px; height:32px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round }
+h1{ margin:0 0 8px; font-family:var(--font-d); font-weight:700; font-size:clamp(28px,5vw,42px); line-height:1.4; color:var(--navy); text-wrap:balance }
+.updated{ margin:0; color:var(--ink-soft); font-size:14px }
+
+.doc-layout{ display:grid; gap:20px; align-items:start }
+@media (min-width:960px){ .doc-layout{ grid-template-columns:250px 1fr; gap:40px } }
+
+.toc ol{ list-style:none; margin:0; padding:0; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none }
+.toc ol::-webkit-scrollbar{ display:none }
+.toc{ position:sticky; top:var(--bar-h); z-index:40; margin:0 -20px; padding:8px 20px; background:color-mix(in srgb, var(--paper) 97%, transparent); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px) }
+.toc a{ display:flex; align-items:center; gap:8px; min-height:44px; padding:0 14px; white-space:nowrap; border-radius:12px; border:1.5px solid var(--line); background:var(--surface); color:var(--ink-soft); font-size:13.5px; text-decoration:none }
+.toc a b{ font-family:var(--font-d); font-size:12px; color:var(--mint-dark) }
+.toc a.active{ border-color:var(--mint); color:var(--ink); background:var(--mint-pale) }
+@media (min-width:960px){
+  .toc{ top:calc(var(--bar-h) + 16px); margin:0; padding:0; background:none; -webkit-backdrop-filter:none; backdrop-filter:none }
+  .toc ol{ flex-direction:column; overflow:visible; gap:6px }
+  .toc a{ white-space:normal; padding:8px 14px; line-height:1.6 }
+}
+
+.sheet{ position:relative; margin-bottom:16px; padding:26px 26px 22px; background:var(--surface); border:1px solid var(--line); border-inline-start:4px solid var(--mint); border-radius:18px; box-shadow:var(--shadow) }
+.sheet .num{ position:absolute; top:22px; inset-inline-end:22px; font-family:var(--font-d); font-weight:700; font-size:13px; color:var(--mint-dark); background:var(--mint-pale); min-width:30px; height:30px; padding:0 8px; border-radius:99px; display:grid; place-items:center }
+.sheet h2{ margin:0 0 12px; padding-inline-end:44px; font-family:var(--font-d); font-weight:700; font-size:19px; line-height:1.6; color:var(--navy) }
+.sheet p{ margin:0 0 10px }
+.sheet ul{ margin:0 0 10px; padding:0; list-style:none }
+.sheet li{ position:relative; padding-inline-start:22px; margin-bottom:8px }
+.sheet li::before{ content:''; position:absolute; inset-inline-start:2px; top:.85em; width:8px; height:8px; border-radius:3px; background:var(--mint) }
+.sheet strong{ color:var(--navy); font-weight:600 }
+.sheet > :last-child{ margin-bottom:0 }
+
+.foot{ padding:32px 20px 48px; text-align:center; color:var(--ink-soft); font-size:13.5px; border-top:1px solid var(--line) }
+.foot p{ margin:6px 0 }
+.foot-sign{ display:flex; width:max-content; margin:0 auto 12px; padding:6px }
+.foot-sign img{ height:56px; width:auto }
+.foot-sign .logo-on-dark, [data-theme="dark"] .foot-sign .logo-on-light{ display:none }
+[data-theme="dark"] .foot-sign .logo-on-dark{ display:block }
+
+@media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto } }
+@media print{
+  .progress, .bar, .toc, .foot-sign, .theme-toggle{ display:none }
+  body{ background:#fff; color:#000; font-size:12pt; line-height:1.8 }
+  .sheet{ box-shadow:none; border:1px solid #bbb; border-inline-start:3px solid #555; break-inside:avoid; background:#fff }
+  .sheet h2, h1, .sheet strong{ color:#000 }
+  .sheet .num{ background:#eee; color:#000 }
+}
+
+/* من غير ده، صف أزرار الفهرس (nowrap) بيوسّع عمود الجريد والصفحة كلها بتتسحب أفقيًا على الموبايل */
+.doc-layout > *{ min-width:0 }

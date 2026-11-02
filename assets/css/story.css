@@ -88,3 +88,28 @@
   .chip{ padding:20px 22px; font-size:16px; gap:12px }
   .chip .icon{ width:24px; height:24px }
 }
+
+/* ---------- تنظيم الصفحة: فصول + تقدّم + شريط تحميل ---------- */
+.progress{ position:fixed; top:0; inset-inline:0; height:3px; z-index:60; background:var(--mint); transform:scaleX(0); transform-origin:right center; pointer-events:none }
+.topnav{ gap:18px }
+.topnav a b{ font-family:var(--font-d); font-size:11px; color:var(--mint-dark); margin-inline-end:6px; font-variant-numeric:tabular-nums }
+
+.chapter{ padding:72px 20px 8px; text-align:center; scroll-margin-top:calc(var(--topbar-h,64px) - 24px) }
+.chapter + section{ padding-top:32px }
+.ch-num{ display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:12px; font-family:var(--font-d); font-weight:700; font-size:13px; letter-spacing:.14em; color:var(--mint-dark) }
+.ch-num::before, .ch-num::after{ content:''; width:36px; height:1px; background:var(--line) }
+.ch-title{ font-family:var(--font-d); font-weight:700; font-size:clamp(26px,4.4vw,38px); color:var(--navy); margin:0 0 8px; text-wrap:balance }
+.ch-sub{ margin:0; color:var(--ink-soft); font-size:15px }
+
+.dl-bar{
+  position:fixed; inset-inline:0; bottom:0; z-index:55; padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+  background:color-mix(in srgb, var(--paper) 90%, transparent); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  border-top:1px solid var(--line); transform:translateY(110%); transition:transform .35s cubic-bezier(.19,1,.22,1);
+}
+.dl-bar.show{ transform:none }
+.dl-bar .btn{ width:100%; min-height:48px; justify-content:center }
+@media (min-width:901px){ .dl-bar{ display:none } }
+@media (prefers-reduced-motion:reduce){ .dl-bar{ transition:none } }
+
+.foot-legal{ display:flex; flex-wrap:wrap; justify-content:center; gap:4px 20px; margin-top:22px }
+.foot-legal a{ display:inline-flex; align-items:center; min-height:44px; font-size:13.5px; color:var(--ink-soft); text-decoration:underline; text-underline-offset:3px }

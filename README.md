@@ -153,3 +153,9 @@ supabase functions deploy review --no-verify-jwt
 
 ## تركيب الإحصائيات من الأول
 شغّل ملفات `analytics/` بالترتيب ده في SQL Editor: `supabase-setup.sql` ← `supabase-setup-reviews.sql` ← `supabase-setup-verified-reviews.sql` ← `supabase-setup-auth.sql`. قبل الأخير اعمل مستخدم من Authentication → Users، واقفل التسجيل الجديد، وبعدها شغّل السطر المعلّق في آخر الملف بإيميلك. الدخول للوحة بالإيميل والباسورد دول.
+
+## ترتيب الصفحة
+الصفحة 5 فصول: المشكلة ← جرّبه ← المميزات ← الثقة ← حمّل. لو ضفت قسم جديد حطّه جوه الفصل المناسب، ولو عملت فصل جديد زوّد عنوانه (`.chapter` بـ id زي `ch-6`) ورابطه في النافيجيشن، وضيف الـ id في قايمة `chapters` في `assets/js/story.js`.
+
+## الصفحات القانونية
+شروط الاستخدام وسياسة الخصوصية وشروط المنتدى على `/terms/` و`/privacy/` و`/forum-terms/`. النص كله في `legal/legal_content.md`: لو عايز تعدّل حاجة غيّرها هناك وشغّل `python3 tools/build_legal.py` وهيعيد بناء الصفحات التلاتة. كل نص بيبدأ بـ `# عنوان` وبينتهي عند `---`.
