@@ -38,7 +38,7 @@
       var on = Number(a.dataset.ch) === idx + 1;
       a.classList.toggle('active', on);
       if(on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
-      if(on) a.scrollIntoView({ inline: 'center', block: 'nearest' });
+      if(on) centerLink(a);
     });
   }
 
@@ -48,6 +48,12 @@
     var show = hero.getBoundingClientRect().bottom < root.clientHeight * 0.6 && cta.getBoundingClientRect().top > root.clientHeight;
     dlBar.classList.toggle('show', show);
     dlBar.inert = !show;
+  }
+
+  /* بنحرّك صف النافيجيشن الأفقي بس، مش الصفحة (scrollIntoView كان بيتخانق مع السكرول) */
+  function centerLink(a){
+    var row = a.parentElement;
+    row.scrollLeft += (a.getBoundingClientRect().left + a.offsetWidth / 2) - (row.getBoundingClientRect().left + row.offsetWidth / 2);
   }
 
   var queued = false;

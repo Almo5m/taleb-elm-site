@@ -103,7 +103,7 @@
 
 .dl-bar{
   position:fixed; inset-inline:0; bottom:0; z-index:55; padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
-  background:color-mix(in srgb, var(--paper) 90%, transparent); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  background:var(--paper);
   border-top:1px solid var(--line); transform:translateY(110%); transition:transform .35s cubic-bezier(.19,1,.22,1);
 }
 .dl-bar.show{ transform:none }
