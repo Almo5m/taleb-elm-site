@@ -37,11 +37,11 @@
     submitText.textContent = 'بيترسل...';
 
     Api.post('review', { name: name, rating: selectedStars, comment: comment || null, visitor_id: getVisitorId(), proof: Api.getProof() }).then(function(res){
-      if(!res.ok) throw new Error('failed');
+      if(!res.ok) throw Api.httpError(res);
       document.getElementById('formCard').style.display = 'none';
       document.getElementById('thanks').style.display = 'block';
-    }).catch(function(){
-      fail('التقييم ماتبعتش. اتأكد من النت وجرّب تاني.');
+    }).catch(function(err){
+      fail(Api.explain(err));
       submitBtn.disabled = false;
       submitText.textContent = 'إرسال التقييم';
     });

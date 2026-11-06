@@ -120,14 +120,14 @@ var Reviews = (function(){
       submitText.textContent = 'بيترسل...';
 
       Api.post('review', { name: name, rating: selectedStars, comment: comment || null, visitor_id: getVisitorId(), proof: Api.getProof(), website: honeypot }).then(function(res){
-        if(!res.ok) throw new Error('failed');
+        if(!res.ok) throw Api.httpError(res);
         status.textContent = 'شكرًا! تقييمك هيظهر بعد مراجعة بسيطة.';
         status.className = 'review-form-status ok';
         form.reset();
         selectedStars = 0;
         picker.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
-      }).catch(function(){
-        status.textContent = 'حصل خطأ، جرّب تاني بعد شوية';
+      }).catch(function(err){
+        status.textContent = Api.explain(err);
         status.className = 'review-form-status err';
       }).finally(function(){
         submitBtn.disabled = false;
