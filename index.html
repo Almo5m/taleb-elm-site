@@ -23,10 +23,9 @@
 <script src="assets/js/theme.js"></script>
 <link rel="stylesheet" href="assets/css/main.css">
 <link rel="stylesheet" href="assets/css/story.css">
+<link rel="stylesheet" href="assets/css/store.css">
 </head>
 <body>
-<div class="progress" id="progress" aria-hidden="true"></div>
-
 <svg style="position:absolute;width:0;height:0" aria-hidden="true">
   <defs>
     <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M4 20c8 0 15-5 16-16C10 5 4 11 4 20Z"/><path d="M6 18c3-5 7-8 12-10"/></symbol>
@@ -73,358 +72,103 @@
       <span class="mark"><img src="assets/app-icon.png" alt="طالب علم"></span>
       طالب علم
     </div>
-    <nav class="topnav" id="topnav" aria-label="فصول الصفحة">
-      <a href="#hero" data-ch="1"><b>01</b>المشكلة</a>
-      <a href="#ch-2" data-ch="2"><b>02</b>جرّبه</a>
-      <a href="#ch-3" data-ch="3"><b>03</b>المميزات</a>
-      <a href="#ch-4" data-ch="4"><b>04</b>الثقة</a>
-      <a href="#ch-5" data-ch="5"><b>05</b>حمّل</a>
-    </nav>
     <div class="top-actions">
       <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" class="icon i-sun"><use href="#i-sun"/></svg><svg viewBox="0 0 24 24" class="icon i-moon"><use href="#i-moon"/></svg></button>
-      <button class="btn btn-mint btn-sm" data-download><span>حمّل التطبيق</span></button>
+      <button class="btn btn-mint btn-sm" data-download><span>تثبيت</span></button>
     </div>
   </div>
 </div>
 
-<!-- ============ HERO ============ -->
-<section id="hero" class="story">
-  <div class="story-sticky">
-    <div class="wrap story-grid">
-      <div class="hero-copy story-copy">
-        <span class="eyebrow"><i></i>لطلاب الثانوية العامة والبكالوريا المصرية</span>
-        <h1 class="story-heads"><span class="head-a">مذاكرتك مبعثرة في 10 حتت؟</span><span class="head-b">كله اتجمّع في مكان واحد</span></h1>
-        <p class="desc">ملزمة هنا، ميعاد هناك، واجب على واتساب. طالب علم بيرتّبهم كلهم على مقاس صفك وشعبتك — انزل الصفحة وشوف بيحصل إيه.</p>
-        <div class="hero-cta">
-          <button class="btn btn-mint" data-download><span><svg viewBox="0 0 24 24" class="icon" style="width:16px;height:16px"><use href="#i-download"/></svg> حمّل التطبيق مجانًا</span></button>
-          <a href="#try-now" class="btn btn-ghost">جرّب من غير تحميل</a>
-        </div>
-        <p class="dev-note" hidden><span>التطبيق للأندرويد. افتح الصفحة من موبايلك، أو انسخ الرابط وابعته لنفسك.</span><button type="button">انسخ الرابط</button></p>
-        <div class="trust-row">
-          <span class="trust-item"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> مجاني بالكامل</span>
-          <span class="trust-item"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> مذاكرتك محفوظة على جهازك</span>
-          <span class="trust-item"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> مبني للثانوي والبكالوريا بس</span>
-        </div>
-      </div>
-      <div class="board" aria-hidden="true">
-        <div class="chip" style="--dx:-120;--dy:-90;--r:-8"><svg class="icon" viewBox="0 0 24 24"><use href="#i-flask"/></svg>ملزمة الكيمياء<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
-        <div class="chip" style="--dx:140;--dy:-60;--r:6"><svg class="icon" viewBox="0 0 24 24"><use href="#i-calendar"/></svg>جدول الأسبوع<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
-        <div class="chip" style="--dx:-90;--dy:40;--r:5"><svg class="icon" viewBox="0 0 24 24"><use href="#i-chat"/></svg>قروب الفيزياء<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
-        <div class="chip" style="--dx:110;--dy:110;--r:-7"><svg class="icon" viewBox="0 0 24 24"><use href="#i-globe"/></svg>واجب الإنجليزي<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
-        <div class="chip" style="--dx:-60;--dy:150;--r:9"><svg class="icon" viewBox="0 0 24 24"><use href="#i-timer"/></svg>مؤقت المذاكرة<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
-        <div class="chip" style="--dx:90;--dy:-120;--r:-5"><svg class="icon" viewBox="0 0 24 24"><use href="#i-bell"/></svg>ميعاد الامتحان<svg class="icon ok" viewBox="0 0 24 24"><use href="#i-check"/></svg></div>
-        
+<main class="store">
+
+  <section id="app-header">
+    <div class="app-top">
+      <img class="app-icon" src="assets/app-icon.png" alt="طالب علم" width="112" height="112">
+      <div class="app-id">
+        <h1>طالب علم</h1>
+        <a class="app-dev" href="#about-dev">AlMo</a>
+        <span class="app-cat">للثانوية العامة والبكالوريا المصرية</span>
       </div>
     </div>
-    <p class="scroll-hint">انزل وشوف</p>
-  </div>
-</section>
+    <ul class="app-stats">
+      <li><b id="hdrScore">جديد</b><span id="hdrCount">لسه من غير تقييمات</span></li>
+      <li><b>مجاني</b><span>بالكامل</span></li>
+      <li><b>أندرويد</b><span>للموبايل</span></li>
+      <li><b>3.0.0</b><span>آخر إصدار</span></li>
+    </ul>
+    <button class="btn btn-mint install-btn" data-download type="button"><span><svg viewBox="0 0 24 24" class="icon" style="width:17px;height:17px"><use href="#i-download"/></svg> تثبيت</span></button>
+    <p class="dev-note" hidden><span>التطبيق للأندرويد. افتح الصفحة من موبايلك، أو انسخ الرابط وابعته لنفسك.</span><button type="button">انسخ الرابط</button></p>
+  </section>
 
-<section id="who">
-  <div class="wrap" data-reveal>
-    <p class="eyebrow"><i></i>مش تطبيق عام</p>
-    <h2 class="section-title" style="max-width:720px;margin:0 auto 14px">طالب علم اتبنى بس عشان طلاب الثانوية العامة والبكالوريا المصرية</h2>
-    <p class="section-sub" style="margin:0 auto">اختار نظامك، صفك، وشعبتك أو مسارك — والتطبيق يترتب على مقاسك من أول ثانية.</p>
-    <div class="badges">
-      <span class="badge card"><svg viewBox="0 0 24 24" class="icon"><use href="#i-book"/></svg> الثانوية العامة — علمي وأدبي</span>
-      <span class="badge card"><svg viewBox="0 0 24 24" class="icon"><use href="#i-globe"/></svg> البكالوريا المصرية — بمساراتها الأربعة</span>
+  <section id="shots" aria-label="صور من التطبيق">
+    <div class="shots">
+      <div class="shot"><img src="assets/screenshots/today.jpg" alt="شاشة اليوم" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/schedule.jpg" alt="جدول المذاكرة" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/materials.jpg" alt="شاشة المواد" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/stats.jpg" alt="الإحصائيات" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/tasks.jpg" alt="سجل المهام" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/catchup.jpg" alt="ورقة اللحاق" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/backlog-1.jpg" alt="تراكماتي: المتراكم عليك" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/backlog-2.jpg" alt="تراكماتي: محاضرات اليوم" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/backlog-3.jpg" alt="تراكماتي: هدفك" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/bo-assistant.jpg" alt="بو، المساعد الذكي" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/religious.jpg" alt="الركن الديني" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/achievements.jpg" alt="الإنجازات" width="540" height="1000" loading="lazy"></div>
+      <div class="shot"><img src="assets/screenshots/forum.jpg" alt="منتدى الطلاب" width="540" height="1000" loading="lazy"></div>
     </div>
-    <div class="subject-grid" style="margin-top:40px" data-reveal>
-      <div class="subject-chip"><span class="ic" style="background:var(--lavender-pale);color:var(--lavender)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-flask"/></svg></span><b>الكيمياء</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--teal-pale);color:var(--teal)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-leaf"/></svg></span><b>الأحياء</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--lavender-pale);color:var(--lavender)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-bolt"/></svg></span><b>الفيزياء</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-book"/></svg></span><b>اللغة العربية</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--coral-pale);color:var(--coral)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-globe"/></svg></span><b>الإنجليزية</b></div>
-      <div class="subject-chip"><span class="ic" style="background:var(--navy-pale);color:var(--navy)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-plus"/></svg></span><b>ومواد تانية</b></div>
+  </section>
+
+  <section id="about" class="blk">
+    <h2>عن التطبيق</h2>
+    <p>طالب علم بيرتّب مذاكرتك لثانوية العامة والبكالوريا المصرية، على مقاس صفك وشعبتك أو مسارك. موادك ودروسك وجدولك ومحاضراتك ومؤقت المذاكرة وإنجازاتك ومنتدى لطلاب صفك، كلها في مكان واحد. وبو، المساعد الذكي، جاهز يشرحلك أو يدعمك وقت الضغط.</p>
+    <div class="chips">
+      <span>الثانوية العامة · علمي وأدبي</span>
+      <span>البكالوريا · المسارات الأربعة</span>
+      <span>بو المساعد الذكي</span>
+      <span>بومودورو وعداد مفتوح</span>
+      <span>تراكماتي وورقة اللحاق</span>
+      <span>الركن الديني</span>
     </div>
-    <p class="section-sub" style="margin:16px auto 0" data-reveal>دي مجرد أمثلة، مش القايمة كلها — التطبيق بيضيفلك موادك أول ما تحدد نظامك وصفك وشعبتك أو مسارك.</p>
-  </div>
-</section>
+  </section>
 
-<div class="chapter" id="ch-2"><span class="ch-num">02</span><h2 class="ch-title">جرّبه بنفسك</h2><p class="ch-sub">من غير ما تحمّل حاجة</p></div>
+  <section id="updates" class="blk">
+    <h2>ما الجديد</h2>
+    <div class="updates-list is-collapsed" id="updatesList"></div>
+    <button type="button" class="updates-more" id="updatesMore" aria-expanded="false">عرض كل التحديثات</button>
+  </section>
 
-<section id="try-now">
-  <div class="wrap">
-    <div style="text-align:center;margin-bottom:36px" data-reveal>
-      <span class="eyebrow" style="background:var(--amber-pale);color:var(--amber)"><i style="background:var(--amber)"></i>جرّب من غير ما تحمّل</span>
-      <h2 class="section-title">عيش تجربة طالب علم دلوقتي، هنا بالظبط</h2>
-      <p class="section-sub" style="margin:12px auto 0">مش هنقولّك "شوف الصور وصدّقنا" — دوس وشغّل بنفسك. الاتنين تحت شغالين فعليًا.</p>
-    </div>
-
-    <div class="demo-grid" data-reveal>
-      <!-- Pomodoro demo -->
-      <div class="demo-card card">
-        <div class="demo-card-head">
-          <span class="ic-round" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-timer"/></svg></span>
-          <div>
-            <b>بومودورو تجريبي</b>
-            <small>دوس ابدأ وشوف الوقت بينزل فعليًا</small>
-          </div>
-        </div>
-        <div class="demo-timer">
-          <div class="demo-timer-display" id="demoTimerDisplay">25:00</div>
-          <div class="demo-timer-label" id="demoTimerLabel">جاهز تبدأ؟</div>
-          <div class="demo-timer-controls">
-            <button type="button" class="demo-btn demo-btn-main" id="demoTimerToggle">
-              <svg viewBox="0 0 24 24" class="icon"><use href="#i-play"/></svg>
-              <span>ابدأ</span>
-            </button>
-            <button type="button" class="demo-btn demo-btn-ghost" id="demoTimerReset" aria-label="إعادة">
-              <svg viewBox="0 0 24 24" class="icon"><use href="#i-refresh"/></svg>
-            </button>
-          </div>
-        </div>
+  <section id="data-safety" class="blk">
+    <h2>أمان البيانات</h2>
+    <p class="blk-sub">بصراحة ووضوح: بياناتك فين بالظبط؟</p>
+    <div class="safety">
+      <div class="safety-card">
+        <h3><svg viewBox="0 0 24 24" class="icon"><use href="#i-device"/></svg> على جهازك بس</h3>
+        <ul><li>موادك ودروسك وملخصاتك</li><li>جدول مذاكرتك ومواعيدك</li><li>جلسات المذاكرة وإنجازاتك</li><li>ملاحظاتك الشخصية</li></ul>
       </div>
-
-      <!-- Task list demo -->
-      <div class="demo-card card">
-        <div class="demo-card-head">
-          <span class="ic-round" style="background:var(--coral-pale);color:var(--coral)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg></span>
-          <div>
-            <b>مهامك النهارده</b>
-            <small>ضيف مهمة، وعلّم عليها لما تخلصها</small>
-          </div>
-        </div>
-        <form class="demo-task-form" id="demoTaskForm">
-          <input type="text" id="demoTaskInput" placeholder="اكتب مهمة... زي مذاكرة الكيمياء" maxlength="60" autocomplete="off">
-          <button type="submit" class="demo-btn demo-btn-main demo-btn-sm">
-            <svg viewBox="0 0 24 24" class="icon"><use href="#i-plus"/></svg>
-          </button>
-        </form>
-        <div class="demo-task-progress">
-          <div class="demo-task-progress-bar"><span id="demoTaskProgressFill"></span></div>
-          <small id="demoTaskProgressLabel">0/0 مهام</small>
-        </div>
-        <ul class="demo-task-list" id="demoTaskList">
-          <li class="demo-task-empty" id="demoTaskEmpty">لسه مفيش مهام — ضيف أول واحدة!</li>
-        </ul>
+      <div class="safety-card">
+        <h3><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg> محتاج اتصال بالسيرفر</h3>
+        <ul><li>تسجيل الدخول لحسابك</li><li>منتدى الطلاب: أسئلتك وردودك</li></ul>
       </div>
     </div>
+  </section>
 
-    <p class="demo-nudge" data-reveal>
-      ❤️ دي تجربة مصغّرة بس — التطبيق الحقيقي فيه كل مادتك، جدولك الشهري، بو المساعد الذكي، ومنتدى صفك.
-    </p>
-  </div>
-</section>
-
-<section id="gallery">
-  <div class="wrap">
-    <div style="text-align:center;margin-bottom:10px" data-reveal>
-      <span class="eyebrow"><i></i>شوف التطبيق بنفسك</span>
-      <h2 class="section-title">مش وعود، ده التطبيق شغّال فعلًا</h2>
-    </div>
-    <div class="gallery-scroll" data-reveal>
-      <div class="gallery-item">
-        <div class="phone"><div class="screen"><img src="assets/screenshots/today.jpg" alt="شاشة اليوم" loading="lazy"></div></div>
-        <p class="cap">اليوم<small>نظرة سريعة على يومك</small></p>
-      </div>
-      <div class="gallery-item">
-        <div class="phone"><div class="screen"><img src="assets/screenshots/schedule.jpg" alt="جدول المذاكرة" loading="lazy"></div></div>
-        <p class="cap">جدول المذاكرة<small>تقويم شهري كامل</small></p>
-      </div>
-      <div class="gallery-item">
-        <div class="phone"><div class="screen"><img src="assets/screenshots/materials.jpg" alt="شاشة المواد" loading="lazy"></div></div>
-        <p class="cap">المواد<small>كل مادة في مكانها</small></p>
-      </div>
-      <div class="gallery-item">
-        <div class="phone"><div class="screen"><img src="assets/screenshots/religious.jpg" alt="الركن الديني" loading="lazy"></div></div>
-        <p class="cap">الركن الديني<small>أذكار وأدعية</small></p>
-      </div>
-      <div class="gallery-item">
-        <div class="phone"><div class="screen"><img src="assets/screenshots/achievements.jpg" alt="الإنجازات" loading="lazy"></div></div>
-        <p class="cap">الإنجازات<small>افتحها بانتظامك</small></p>
-      </div>
-      <div class="gallery-item">
-        <div class="phone"><div class="screen"><img src="assets/screenshots/forum.jpg" alt="منتدى الطلاب" loading="lazy"></div></div>
-        <p class="cap">منتدى الطلاب<small>اسأل زمايلك في صفك</small></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="bo-assistant">
-  <div class="wrap">
-    <div class="bo-card card" data-reveal>
-      <div class="bo-visual" data-reveal="scale">
-        <div class="phone"><div class="screen"><img src="assets/screenshots/bo-assistant.jpg" alt="بو، المساعد الذكي" loading="lazy"></div></div>
-      </div>
-      <div class="bo-text">
-        <span class="eyebrow" style="background:var(--lavender-pale);color:var(--lavender)"><i style="background:var(--lavender)"></i>جديد كل الجدة</span>
-        <h3>بو، مساعدك الذكي جوه التطبيق</h3>
-        <p>بو مش بس بيجاوبك على أسئلتك عن التطبيق — بيدعمك وقت المذاكرة، وممكن كمان يشرحلك مفهوم أو يساعدك تحل مسألة في مادتك. تلاقيه أول ما تدخل تاب اليوم، جاهز يسمعك في أي وقت.</p>
-        <ul class="bo-points">
-          <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-chat"/></svg> يجاوبك على أي سؤال عن التطبيق ومميزاته</li>
-          <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-sparkle"/></svg> دعم نفسي وقت ضغط المذاكرة والامتحانات</li>
-          <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-book"/></svg> يشرحلك مفهوم أو يساعدك تحل مسألة في مادتك</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="chapter" id="ch-3"><span class="ch-num">03</span><h2 class="ch-title">كل حاجة مترتبة</h2><p class="ch-sub">مواد ووقت ودعم ومنتدى على مقاس صفك</p></div>
-
-<section id="features">
-  <div class="wrap">
-
-    <div class="feature-big">
-      <div class="feature-text" data-reveal>
-        <span class="eyebrow"><i></i>كل مادة في مكانها</span>
-        <h3>منهجك كله قدامك، مادة مادة</h3>
-        <p>كل مادة عندها دروسها، ملخصاتها، واجباتها، امتحاناتها، وملفاتها. تضيف درس جديد في ثانية، وتتابع نسبة إنجازك في كل مادة أول بأول.</p>
-      </div>
-      <div class="phone" data-reveal="scale">
-        <div class="screen"><img src="assets/screenshots/materials.jpg" alt="شاشة المواد في طالب علم" loading="lazy"></div>
-      </div>
-    </div>
-
-    <div class="feature-big">
-      <div class="phone" data-reveal="scale">
-        <div class="screen"><img src="assets/screenshots/lectures.jpg" alt="متابعة المحاضرات" loading="lazy"></div>
-      </div>
-      <div class="feature-text" data-reveal>
-        <span class="eyebrow"><i></i>ولا محاضرة تفوتك</span>
-        <h3>متابعة المحاضرات أول بأول</h3>
-        <p>كل محاضرة أونلاين أو أونساعة ليها ميعادها في التطبيق، وعلّم أي محاضرة اتفرجت عليها بضغطة واحدة. والستريك بتاعك بقى بيحسب كمان أيام مشاهدة المحاضرات، مش بس أيام المذاكرة.</p>
-      </div>
-    </div>
-
-    <div class="feature-grid">
-      <div class="f-card card" data-reveal>
-        <div class="ic-round" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-timer"/></svg></div>
-        <h4>مؤقت مذاكرة يفرض عليك الانضباط</h4>
-        <p>جلسات مذاكرة مقسمة بنظام بومودورو، وتقدر تتابع كل جلسة خلصت كام دقيقة من يومك.</p>
-        <div class="pomodoro-ring"><span>25:00</span></div>
-      </div>
-      <div class="f-card card" data-reveal>
-        <div class="ic-round" style="background:var(--amber-pale);color:var(--amber)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-timer"/></svg></div>
-        <h4>أو عداد مفتوح بلا وقت محدد</h4>
-        <p>سيب موبايلك بعيد وذاكر من غير قطع — العداد بيفضل شغال لحد ما تدوس إنك خلصت بنفسك.</p>
-      </div>
-      <div class="f-card card" data-reveal>
-        <div class="ic-round" style="background:var(--navy-pale);color:var(--navy)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-calendar"/></svg></div>
-        <h4>جدول مذاكرة بالتقويم</h4>
-        <p>حدد مواعيد المذاكرة والمواعيد المهمة على تقويم شهري، والتطبيق يفكرك في وقتها بالظبط.</p>
-      </div>
-      <div class="f-card card" data-reveal>
-        <div class="ic-round" style="background:var(--coral-pale);color:var(--coral)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-bell"/></svg></div>
-        <h4>مهام بمواعيد وتذكير مستمر</h4>
-        <p>حدد تاريخ ووقت لأي مهمة، والتطبيق يفضل يفكّرك بيها كل شوية لحد ما تخلّصها.</p>
-      </div>
-    </div>
-
-    <div class="strip" style="margin-top:20px">
-      <div class="strip-main" data-reveal>
-        <div class="ic-round"><svg viewBox="0 0 24 24" class="icon"><use href="#i-trophy"/></svg></div>
-        <h4>إنجازات ولوحة ترتيب</h4>
-        <p>افتح إنجازات مع كل ساعة مذاكرة ومهمة بتخلصها، وقارن انتظامك بزمايلك في لوحة الترتيب.</p>
-      </div>
-      <div class="mini-card card" data-reveal>
-        <span class="num"><span class="cnt" data-count="10">0</span>+</span>
-        <span class="lbl">إنجاز تقدر تفتحه</span>
-      </div>
-      <div class="mini-card card" data-reveal>
-        <span class="num">🔥</span>
-        <span class="lbl">تتبع أيامك المتتالية</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="religious">
-  <div class="wrap">
-    <div class="rel-wrap rel-inner" data-reveal>
-      <div class="rel-text">
-        <span class="eyebrow"><i></i>مذاكرتك مش بس مادة</span>
-        <h3>الركن الديني</h3>
-        <p>أذكار الصباح والمساء، أدعية للمذاكرة والامتحانات، سبحة إلكترونية، وتذكير إنك تدعي قبل ما تدخل أي امتحان — كل ده جوه نفس التطبيق اللي بتذاكر بيه.</p>
-        <p class="quote">"لأن التوفيق مش بس مذاكرة."</p>
-      </div>
-      <div class="rel-list">
-        <div class="rel-row">
-          <span class="ic-round" style="background:var(--amber-pale);color:var(--amber)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-sun"/></svg></span>
-          <div><b>أذكار الصباح والمساء</b><small>تذكير يومي في وقته</small></div>
-        </div>
-        <div class="rel-row">
-          <span class="ic-round" style="background:var(--navy-pale);color:var(--navy)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-moon"/></svg></span>
-          <div><b>أدعية للمذاكرة والامتحانات</b><small>قبل ما تدخل أي اختبار</small></div>
-        </div>
-        <div class="rel-row">
-          <span class="ic-round" style="background:var(--mint-pale);color:var(--mint-dark)"><svg viewBox="0 0 24 24" class="icon"><use href="#i-beads"/></svg></span>
-          <div><b>سبحة إلكترونية</b><small>عداد تسبيح رقمي</small></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="forum">
-  <div class="wrap">
-    <div class="forum-card card" data-reveal>
-      <div class="feature-text">
-        <span class="eyebrow"><i></i>مش لوحدك</span>
-        <h3>منتدى لطلاب صفك بالظبط</h3>
-        <p>اسأل واتناقش مع طلاب في نفس صفك وشعبتك أو مسارك — مش مع العالم كله.</p>
-      </div>
-      <div class="phone"><div class="screen"><img src="assets/screenshots/forum.jpg" alt="منتدى الطلاب" loading="lazy"></div></div>
-    </div>
-  </div>
-</section>
-
-<div class="chapter" id="ch-4"><span class="ch-num">04</span><h2 class="ch-title">ثقة</h2><p class="ch-sub">بياناتك فين، وإيه رأي الطلاب</p></div>
-
-<section id="clarity">
-  <div class="wrap">
-    <div class="clarity-card card" data-reveal>
-      <div class="clarity-head">
-        <span class="eyebrow"><i></i>بصراحة ووضوح</span>
-        <h2 class="section-title">بياناتك فين بالظبط؟</h2>
-      </div>
-      <div class="clarity-cols">
-        <div class="clarity-col local">
-          <div class="col-head"><svg viewBox="0 0 24 24" class="icon"><use href="#i-device"/></svg><b>على جهازك بس</b></div>
-          <ul>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> موادك ودروسك وملخصاتك</li>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> جدول مذاكرتك ومواعيدك</li>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> جلسات المذاكرة وإنجازاتك</li>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg> ملاحظاتك الشخصية</li>
-          </ul>
-        </div>
-        <div class="clarity-col server">
-          <div class="col-head"><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg><b>محتاج اتصال بالسيرفر</b></div>
-          <ul>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg> تسجيل الدخول لحسابك</li>
-            <li><svg viewBox="0 0 24 24" class="icon"><use href="#i-cloud"/></svg> منتدى الطلاب — أسئلتك وردودك</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="reviews">
-  <div class="wrap">
-    <div class="reviews-head">
-      <div data-reveal>
-        <span class="eyebrow"><i></i>آراء الطلاب</span>
-        <h2 class="section-title">إيه رأي اللي جرّبوه</h2>
-      </div>
-      <div class="reviews-summary" id="reviewsSummary" style="display:none" data-reveal>
+  <section id="reviews" class="blk">
+    <h2>التقييمات والآراء</h2>
+    <div class="reviews-summary overview" id="reviewsSummary" style="display:none">
+      <div class="rating-big">
         <span class="score" id="reviewsScore">–</span>
-        <div>
-          <div class="stars" id="reviewsStars"></div>
-          <span class="count" id="reviewsCount"></span>
-        </div>
+        <div class="stars" id="reviewsStars"></div>
+        <span class="count" id="reviewsCount"></span>
       </div>
+      <div class="rating-bars" id="ratingBars"></div>
     </div>
 
-    <div class="reviews-track" id="reviewsTrack" data-reveal>
-      <p class="reviews-empty" id="reviewsEmpty">لسه مفيش تقييمات — كن أول واحد يشارك رأيه!</p>
+    <div class="reviews-track reviews-list" id="reviewsTrack">
+      <p class="reviews-empty" id="reviewsEmpty">لسه مفيش تقييمات. كن أول واحد يشارك رأيه!</p>
     </div>
 
-    <div class="review-form-card card" data-reveal>
-      <h3>شاركنا رأيك</h3>
+    <div class="review-form-card card">
+      <h3>قيّم التطبيق</h3>
       <p>تقييمك بيظهر للطلاب التانيين بعد مراجعة بسيطة.</p>
       <form id="reviewForm">
         <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off">
@@ -450,41 +194,31 @@
         <div class="review-form-status" id="reviewStatus"></div>
       </form>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="founder">
-  <div class="wrap founder-card card" data-reveal="scale">
-    <span class="quote-mark">"</span>
-    <p>أنا معاذ، صممت طالب علم وأنا لسه طالب زيك. عارف قد إيه صعب إنك تنظم وقتك في السنين دي — عشان كده بنيت التطبيق ده، ولسه بطوّره باستمرار.</p>
-    <span class="who">Al-Mo</span>
-  </div>
-</section>
+  <section id="about-dev" class="blk">
+    <h2>عن المطوّر</h2>
+    <blockquote class="dev-quote">
+      <p>أنا معاذ، صممت طالب علم وأنا لسه طالب زيك. عارف قد إيه صعب إنك تنظم وقتك في السنين دي، عشان كده بنيت التطبيق ده، ولسه بطوّره باستمرار.</p>
+      <footer>AlMo</footer>
+    </blockquote>
+  </section>
 
-<div class="chapter" id="ch-5"><span class="ch-num">05</span><h2 class="ch-title">ابدأ</h2><p class="ch-sub">3 خطوات وتبقى جاهز</p></div>
-
-<section id="cta-final">
-  <div class="wrap">
-    <div class="cta-box" data-reveal>
-      <div class="inner">
-        <h2>جاهز ترتب مذاكرتك؟</h2>
-        <p>حمّل طالب علم دلوقتي وابدأ خطوتك الأولى نحو مذاكرة منظمة.</p>
-        <button class="btn btn-mint" data-download><span><svg viewBox="0 0 24 24" class="icon" style="width:16px;height:16px"><use href="#i-download"/></svg> حمّل النسخة الأولى من التطبيق (APK)</span></button>
-        <div><span class="beta-note"><svg viewBox="0 0 24 24" class="icon" style="width:15px;height:15px"><use href="#i-bolt"/></svg> قريبًا على Google Play</span></div>
-        <p class="warn-hint">التثبيت 3 خطوات بس — هنوريهالك قبل ما التحميل يبدأ.</p>
-      </div>
+  <section id="info" class="blk">
+    <h2>معلومات إضافية</h2>
+    <div class="info-list">
+      <div class="info-row"><span>الإصدار</span><b>3.0.0</b></div>
+      <div class="info-row"><span>المطوّر</span><b>AlMo (معاذ)</b></div>
+      <a class="info-row" href="https://whatsapp.com/channel/0029VbDeexfIyPtIvmXFRG2r" target="_blank" rel="noopener"><span>قناة واتساب</span><b>تابع التحديثات</b></a>
+      <a class="info-row" href="https://wa.me/201550036259" target="_blank" rel="noopener"><span>تواصل معنا</span><b>واتساب</b></a>
+      <a class="info-row" href="mailto:moaz2009amen@gmail.com"><span>الإيميل</span><b>moaz2009amen@gmail.com</b></a>
+      <a class="info-row" href="privacy/"><span>سياسة الخصوصية</span><b>اقرأ</b></a>
+      <a class="info-row" href="terms/"><span>شروط الاستخدام</span><b>اقرأ</b></a>
+      <a class="info-row" href="forum-terms/"><span>شروط المنتدى</span><b>اقرأ</b></a>
     </div>
-  </div>
-</section>
-
-<section id="install-notice">
-  <div class="wrap">
-    <div style="text-align:center;margin-bottom:28px" data-reveal>
-      <span class="eyebrow"><i></i>سؤال بيتكرر كتير</span>
-      <h2 class="section-title" style="max-width:680px;margin:0 auto">ظهرلك تحذير وقت التثبيت؟ التطبيق سليم 100%</h2>
-    </div>
-
-    <div class="notice-card card" data-reveal>
+    <details id="install-notice" class="notice-more">
+      <summary>ظهرلك تحذير وقت التثبيت؟ التطبيق سليم 100%<svg viewBox="0 0 24 24" class="icon"><use href="#i-chevron"/></svg></summary>
+      <div class="notice-card card">
       <div class="notice-head">
         <div class="notice-shot"><img src="assets/play-protect-warning.webp" alt="رسالة تم حظر التطبيق لحماية جهازك من Play للحماية" loading="lazy"></div>
         <div>
@@ -506,7 +240,7 @@
 
       <div class="notice-reassure">
         <svg viewBox="0 0 24 24" class="icon"><use href="#i-check"/></svg>
-        <span>الرسالة دي ملهاش علاقة ببياناتك. مذاكرتك على جهازك، والتفاصيل في <a href="#ch-4">فصل الثقة</a>.</span>
+        <span>الرسالة دي ملهاش علاقة ببياناتك. مذاكرتك على جهازك، والتفاصيل في <a href="#data-safety">أمان البيانات</a>.</span>
       </div>
 
       <div class="notice-cta">
@@ -514,12 +248,13 @@
         <p>وبكده الرسالة دي متظهرش لأي حد تاني خالص.</p>
       </div>
     </div>
-  </div>
-</section>
+  
+    </details>
+  </section>
 
-<section id="support">
+  <section id="support">
   <div class="wrap">
-    <div class="support-card card" data-reveal>
+    <div class="support-card card">
       <div class="support-glow-a"></div>
       <div class="support-glow-b"></div>
       <div class="support-inner">
@@ -561,16 +296,7 @@
   </div>
 </section>
 
-<section id="updates">
-  <div class="wrap">
-    <div class="updates-head" data-reveal>
-      <span class="eyebrow"><i></i>بيتطوّر باستمرار</span>
-      <h2 class="section-title">آخر التحديثات</h2>
-      <p class="section-sub" style="margin-top:10px">بنضيف ونحسّن في طالب علم بشكل مستمر — دي آخر الإضافات.</p>
-    </div>
-    <div class="updates-list" id="updatesList" data-reveal></div>
-  </div>
-</section>
+</main>
 
 <!-- ============ DOWNLOAD WARNING MODAL ============ -->
 <div id="dl-modal" role="dialog" aria-modal="true" aria-labelledby="dl-modal-title">
@@ -633,17 +359,12 @@
   </div>
 </footer>
 
-<div class="dl-bar" id="dlBar" inert>
-  <button class="btn btn-mint" data-download type="button"><span>حمّل التطبيق مجانًا</span></button>
-</div>
-
 <script src="assets/js/config.js"></script>
 <script src="assets/js/api.js"></script>
 <script src="assets/js/analytics.js"></script>
 <script src="assets/js/updates.js"></script>
 <script src="assets/js/reviews.js"></script>
 <script src="assets/js/ui.js"></script>
-<script src="assets/js/demo.js"></script>
-<script src="assets/js/story.js"></script>
+<script src="assets/js/store.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@
    حط لينك تحميل ملف الـ APK هنا (من GitHub Releases مثلًا) — مكان واحد بس
    وكل زراير التحميل في الموقع (فوق، النص، وقسم الـ CTA) هتستخدمه تلقائي.
    ===================================================================== */
-const APK_URL = "https://github.com/Almo5m/taleb-elm-site/releases/download/v1.0/taleb-elm-v2.0.0.apk";
+const APK_URL = "https://github.com/Almo5m/taleb-elm-site/releases/download/v1.0/taleb-elm-v3.0.0.apk";
 
 /* =====================================================================
    إعدادات تتبّع الزيارات (Supabase) — حط بياناتك من:

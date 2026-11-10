@@ -57,6 +57,19 @@ var Reviews = (function(){
     document.getElementById('reviewsScore').textContent = avg.toFixed(1);
     document.getElementById('reviewsStars').innerHTML = starsSvg(Math.round(avg));
     document.getElementById('reviewsCount').textContent = reviews.length.toLocaleString('ar-EG') + ' تقييم';
+    var counts = [0, 0, 0, 0, 0];
+    reviews.forEach(function(r){ counts[r.rating - 1]++; });
+    var bars = document.getElementById('ratingBars');
+    if(bars){
+      bars.innerHTML = [5, 4, 3, 2, 1].map(function(n){
+        var pct = Math.round(counts[n - 1] / reviews.length * 100);
+        return '<div class="bar-row"><span>' + n + '</span><div class="bar"><i style="width:' + pct + '%"></i></div></div>';
+      }).join('');
+    }
+    var headScore = document.getElementById('hdrScore');
+    var headCount = document.getElementById('hdrCount');
+    if(headScore) headScore.textContent = avg.toFixed(1) + ' ★';
+    if(headCount) headCount.textContent = reviews.length.toLocaleString('ar-EG') + ' تقييم';
     box.style.display = 'flex';
   }
 
