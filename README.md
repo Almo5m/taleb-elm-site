@@ -151,6 +151,12 @@ supabase functions deploy review --no-verify-jwt
 ## سكرينات التطبيق
 في `assets/screenshots/` بعرض 540 بكسل. المعرض وقسم `#whats-new` بيقروا منها بالأسماء: today, schedule, materials, stats, tasks, backlog-1, backlog-2, backlog-3, catchup, bo-assistant, religious, achievements, forum. لتبديل أي سكرين، استبدل الملف بنفس الاسم.
 
+## الظهور في جوجل (SEO والفهرسة)
+- الصفحة الرئيسية فيها عنوان ووصف و`canonical` وبيانات منظّمة (`MobileApplication` و`WebSite`) في `index.html`، و`sitemap.xml` و`robots.txt` في الجذر.
+- `robots.txt` جوه فولدر المشروع مش بيتقرا من جوجل، لأن جوجل بتدور عليه في جذر الدومين بس. الأهم هو إنك تقدّم `sitemap.xml` من Search Console.
+- خطوات الفهرسة: ادخل Google Search Console، وأضف خاصية "URL prefix" بالرابط `https://almo5m.github.io/taleb-elm-site/`، وأكّد الملكية (ارفع ملف التحقق في جذر الريبو، أو حط الـ meta tag في `<head>`). بعد كده من Sitemaps ضيف `sitemap.xml`، ومن "URL Inspection" الصق رابط الموقع واضغط "Request indexing".
+- لو غيّرت الدومين، غيّر الرابط في `index.html` (canonical وJSON-LD وOG) وفي `sitemap.xml`.
+
 ## الترخيص
 المشروع ده ملكية خاصة، كل الحقوق محفوظة. راجع ملف `LICENSE`.
 

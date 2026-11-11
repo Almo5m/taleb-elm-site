@@ -23,6 +23,7 @@
 .shots::-webkit-scrollbar{ height:6px }
 .shots::-webkit-scrollbar-thumb{ background:var(--line); border-radius:6px }
 .shot{ flex:0 0 auto; height:min(48vh,400px); aspect-ratio:540/1000; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:var(--surface); scroll-snap-align:start }
+.shot{ cursor:zoom-in }
 .shot img{ width:100%; height:100%; object-fit:cover }
 
 .blk{ padding:26px 0; border-top:1px solid var(--line) }
@@ -84,4 +85,22 @@ a.info-row:hover b{ color:var(--mint-dark) }
   .app-stats b{ font-size:14.5px }
   .safety{ grid-template-columns:1fr }
   .shot{ height:min(52vh,380px) }
+}
+
+#lightbox{ position:fixed; inset:0; z-index:1100; display:flex; align-items:center; justify-content:center; gap:14px; padding:20px; background:rgba(8,12,24,.9) }
+#lightbox[hidden]{ display:none }
+#lightbox figure{ display:flex; flex-direction:column; align-items:center; gap:12px; min-width:0 }
+#lightbox img{ max-height:82vh; max-width:min(88vw,460px); width:auto; height:auto; border-radius:16px; background:var(--surface) }
+#lightbox figcaption{ color:#fff; font-family:var(--font-d); font-weight:700; font-size:14px; text-align:center }
+.lb-close,.lb-nav{ display:flex; align-items:center; justify-content:center; width:46px; height:46px; border:0; border-radius:50%; background:rgba(255,255,255,.14); color:#fff; cursor:pointer; flex-shrink:0 }
+.lb-close:hover,.lb-nav:hover{ background:rgba(255,255,255,.26) }
+.lb-close{ position:absolute; top:16px; inset-inline-start:16px }
+.lb-close svg,.lb-nav svg{ width:22px; height:22px }
+.lb-next svg{ transform:rotate(180deg) }
+@media (max-width:560px){
+  #lightbox{ padding:12px; gap:6px }
+  .lb-nav{ width:40px; height:40px; position:absolute; bottom:18px }
+  .lb-prev{ inset-inline-end:calc(50% + 12px) }
+  .lb-next{ inset-inline-start:calc(50% + 12px) }
+  #lightbox img{ max-height:76vh; max-width:92vw }
 }

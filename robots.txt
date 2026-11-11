@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /taleb-elm-site/analytics/
+Disallow: /taleb-elm-site/rate.html
+
+Sitemap: https://almo5m.github.io/taleb-elm-site/sitemap.xml
