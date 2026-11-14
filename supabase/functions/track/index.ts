@@ -24,12 +24,15 @@ Deno.serve(async (req) => {
   if (!(await allow(`ev:${await clientKey(req)}`, 60, 120))) return json({ error: 'rate' }, 429, cors);
   if (!(await allow(`vis:${visitorId}`, 60, 30))) return json({ error: 'rate' }, 429, cors);
 
+  /* الدولة بس (كود من حرفين) من هيدر Cloudflare. الـ IP نفسه مبيتخزّنش. */
+  const cc = req.headers.get('cf-ipcountry');
   const saved = await insertEvent({
     visitor_id: visitorId,
     event_type: type,
     page: clip(body.page, 200),
     referrer: clip(body.referrer, 500),
     user_agent: clip(req.headers.get('user-agent'), 300),
+    country: cc && /^[A-Z]{2}$/.test(cc) && cc !== 'XX' ? cc : null,
   });
   if (!saved) return json({ error: 'save' }, 500, cors);
 
